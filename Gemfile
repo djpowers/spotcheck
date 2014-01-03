@@ -39,6 +39,8 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'valid_attribute'
   gem 'pry-rails'
+  gem 'validates_email_format_of'
+  gem 'rails-erd'
 end
 
 group :development do
