@@ -10,6 +10,8 @@ describe User do
     it { should_not have_valid(:email).when(nil, "", "dave@") }
 
     it { should have_many :comments }
+    it { should have_many :user_projects }
+    it { should have_many(:projects).through(:user_projects) }
   end
 
   describe 'database' do
