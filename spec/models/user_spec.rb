@@ -2,12 +2,14 @@ require 'spec_helper'
 
 describe User do
 
-  describe 'validation' do
-    it { should have_valid(:name).when("Dave", "Dave Powers") }
-    it { should_not have_valid(:name).when(nil, "") }
+  let(:blanks){ [nil, ''] }
 
-    it { should have_valid(:email).when("dave@videos.com", "david@video.co.uk") }
-    it { should_not have_valid(:email).when(nil, "", "dave@") }
+  describe 'validation' do
+    it { should have_valid(:first_name).when("Dave", "Jean Luc") }
+    it { should_not have_valid(:first_name).when(*blanks) }
+
+    it { should have_valid(:last_name).when("Powers", "Goddard") }
+    it { should_not have_valid(:last_name).when(*blanks) }
 
     it 'has a matching password confirmation for the password' do
       user = User.new
@@ -15,7 +17,7 @@ describe User do
       user.password_confirmation = 'anotherpassword'
 
       expect(user).to_not be_valid
-      expect(user.erros[:password_confirmation]).to_not be_blank
+      expect(user.errors[:password_confirmation]).to_not be_blank
     end
 
     it { should have_many :comments }
@@ -24,7 +26,8 @@ describe User do
   end
 
   describe 'database' do
-    it { should have_db_column(:name).of_type(:string).with_options(null: false) }
+    it { should have_db_column(:first_name).of_type(:string).with_options(null: false) }
+    it { should have_db_column(:last_name).of_type(:string).with_options(null: false) }
     it { should have_db_column(:email).of_type(:string).with_options(null: false) }
   end
 
