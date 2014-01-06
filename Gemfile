@@ -41,6 +41,8 @@ group :development, :test do
   gem 'pry-rails'
   gem 'validates_email_format_of'
   gem 'rails-erd'
+  gem 'simple_form'
+  gem 'devise'
 end
 
 group :development do
