@@ -43,6 +43,7 @@ group :development, :test do
   gem 'rails-erd'
   gem 'simple_form'
   gem 'devise'
+  gem 'launchy'
 end
 
 group :development do
