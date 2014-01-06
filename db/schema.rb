@@ -33,9 +33,9 @@ ActiveRecord::Schema.define(version: 20140105232751) do
   end
 
   create_table "user_projects", force: true do |t|
-    t.integer  "user_id",    null: false
-    t.integer  "project_id", null: false
-    t.string   "role",       null: false
+    t.integer  "user_id",                             null: false
+    t.integer  "project_id",                          null: false
+    t.string   "role",       default: "collaborator", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
