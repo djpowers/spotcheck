@@ -19,8 +19,11 @@
   </ul>
 </nav>
 
-<p class="notice"><%= notice %></p>
-<p class="alert"><%= alert %></p>
+<span id="flashes">
+  <% flash.each do |name, msg| -%>
+      <%= content_tag :div, msg, class: name %>
+    <% end -%>
+</span>
 
 <%= yield %>
 
