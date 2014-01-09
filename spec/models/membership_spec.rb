@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe UserProject do
+describe Membership do
 
   describe 'validations' do
     it { should validate_presence_of :user }

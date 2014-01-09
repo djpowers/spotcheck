@@ -6,7 +6,7 @@ FactoryGirl.define do
     due_date Time.now + 1.weeks
 
     factory :project_with_owner do
-      user
+      membership
     end
   end
 end

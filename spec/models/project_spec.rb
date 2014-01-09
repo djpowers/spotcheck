@@ -6,8 +6,8 @@ describe Project do
     it { should validate_presence_of :title }
 
     it { should have_many :videos }
-    it { should have_many :user_projects }
-    it { should have_many(:users).through(:user_projects) }
+    it { should have_many :memberships }
+    it { should have_many(:users).through(:memberships) }
   end
 
   describe 'database' do
@@ -15,6 +15,34 @@ describe Project do
     it { should have_db_column(:description).of_type(:text) }
     it { should have_db_column(:status).of_type(:string) }
     it { should have_db_column(:due_date).of_type(:datetime) }
+  end
+
+  describe 'role checks' do
+    let(:membership) { FactoryGirl.create(:membership) }
+    let(:user) { membership.user }
+    let(:project) { membership.project }
+
+    it 'is a creator if the role is creator' do
+      expect(project.is_creator?(user)).to be_true
+      membership.role = 'collaborator'
+      membership.save
+      expect(project.is_creator?(user)).to_not be_true
+    end
+
+    it 'is a collaborator if the role is collaborator' do
+      membership.role = 'collaborator'
+      membership.save
+      expect(project.is_collaborator?(user)).to be_true
+    end
+
+    it 'authorizes viewing of project' do
+      expect(project.viewable_by?(user)).to be_true
+      membership.role = 'collaborator'
+      membership.save
+      expect(project.viewable_by?(user)).to be_true
+      membership.destroy
+      expect(project.viewable_by?(user)).to be_false
+    end
   end
 
 end

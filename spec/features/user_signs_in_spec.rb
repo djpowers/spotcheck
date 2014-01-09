@@ -11,6 +11,7 @@ feature 'user signs in', %Q{
   # and I gain access to the system
   # If I specify an invalid email and password, I remain unauthenticated
   # If I am already signed in, I can't sign in again
+  # I am redirected to a list of my projects
 
   scenario 'an existing user specifies a valid email and password' do
     user = FactoryGirl.create(:user)
@@ -19,8 +20,10 @@ feature 'user signs in', %Q{
     fill_in 'Email', with: user.email
     fill_in 'Password', with: user.password
     click_button 'Sign In'
+
     expect(page).to have_content('Welcome back!')
     expect(page).to have_content('Sign Out')
+    expect(page).to_not have_content('Delete')
   end
 
   scenario 'a nonexistant email and password is supplied' do
@@ -60,6 +63,18 @@ feature 'user signs in', %Q{
     visit new_user_session_path
 
     expect(page).to have_content('You are already signed in.')
+  end
+
+  scenario 'an existing user with videos signs in' do
+    project = FactoryGirl.create(:membership)
+    owner = project.user
+    visit root_path
+    click_link 'Sign In'
+    fill_in 'Email', with: owner.email
+    fill_in 'Password', with: owner.password
+    click_button 'Sign In'
+
+    expect(page).to have_content('Delete')
   end
 
 end

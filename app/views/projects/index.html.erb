@@ -1,1 +1,22 @@
 <%= link_to 'New Project', new_project_path %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @projects.each do |project| %>
+      <tr>
+        <td><%= project.title %></td>
+        <td><%= link_to 'Show' %></td>
+        <td><%= link_to 'Delete' %></td>
+        <%= link_to 'Users', project_project_users_path(project) %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+params[:project_id]

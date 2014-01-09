@@ -1,4 +1,4 @@
-class UserProject < ActiveRecord::Base
+class Membership < ActiveRecord::Base
 
   validates_presence_of :user
   validates_numericality_of :user_id

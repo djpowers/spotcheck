@@ -1,9 +1,10 @@
 class ProjectsController < ApplicationController
 
   before_action :authenticate_user!
+  before_action :authorize_user, only: [:show]
 
   def index
-    @projects = Project.all.where(params[:id])
+    @projects = current_user.projects
   end
 
   def new
@@ -14,6 +15,8 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
 
     if @project.save
+      @membership = current_user.memberships.build(project_id: @project.id)
+      @membership.save
       flash[:notice] = 'Project was successfully created.'
       redirect_to @project
     else
@@ -23,12 +26,20 @@ class ProjectsController < ApplicationController
 
   def show
     @project = Project.find(params[:id])
+    # @project = Project.where(id: params[:id]).first
   end
 
   private
 
     def project_params
       params.require(:project).permit(:title, :description, :status, :due_date)
+    end
+
+    def authorize_user
+      @project = Project.find(params[:id])
+      unless user_signed_in? and @project.viewable_by?(current_user)
+        redirect_to root_path, alert: 'Access Denied.'
+      end
     end
 
 end

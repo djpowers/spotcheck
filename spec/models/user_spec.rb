@@ -21,14 +21,23 @@ describe User do
     end
 
     it { should have_many :comments }
-    it { should have_many :user_projects }
-    it { should have_many(:projects).through(:user_projects) }
+    it { should have_many :memberships }
+    it { should have_many(:projects).through(:memberships) }
   end
 
   describe 'database' do
     it { should have_db_column(:first_name).of_type(:string).with_options(null: false) }
     it { should have_db_column(:last_name).of_type(:string).with_options(null: false) }
     it { should have_db_column(:email).of_type(:string).with_options(null: false) }
+  end
+
+  describe 'created_projects' do
+    let(:user1) { FactoryGirl.create(:user) }
+    let(:user2) { FactoryGirl.create(:user_with_project) }
+    it 'returns all projects that a user owns' do
+      expect(user1.created_projects.count).to eql(0)
+      expect(user2.created_projects.count).to eql(1)
+    end
   end
 
 end
