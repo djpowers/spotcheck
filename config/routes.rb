@@ -1,7 +1,7 @@
 Spotcheck::Application.routes.draw do
   devise_for :users
   resources :projects do
-    resources :project_users
+    resources :memberships
   end
   root 'pages#index'
   # The priority is based upon order of creation: first created -> highest priority.

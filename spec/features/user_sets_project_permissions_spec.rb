@@ -14,8 +14,12 @@ feature 'user sets project permissions', %Q{
   # users not on permission list are denied access
   # project settings only accessible by project creator
 
+  scenario 'user views project members'
+
   scenario 'project creator adds collaborator to project' do
     membership = FactoryGirl.create(:membership, role: 'creator')
+    email = 'newbie@example.com'
+    new_member = FactoryGirl.create(:user, email: email)
     creator = membership.user
     project = membership.project
     visit root_path
@@ -25,12 +29,13 @@ feature 'user sets project permissions', %Q{
     click_button 'Sign In'
     visit project_path(project)
 
-    click_link 'Add User to Project'
-    fill_in 'New User Email', with: 'newbie@example.com'
+    click_link 'Add New Member'
+    fill_in 'User Email', with: email
     choose 'Collaborator'
     click_button 'Create User'
 
     expect(page).to have_content("New user was successfully added to project.")
+    expect(project.users).to include(new_member)
   end
 
   scenario 'non-creator adds user to project'

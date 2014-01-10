@@ -1,0 +1,7 @@
+<%= simple_form_for([@project, @membership]) do |f| %>
+
+  <%= f.input :email, label: 'User Email' %>
+  <%= f.input :role, as: :radio_buttons, collection: ['Creator', 'Collaborator'] %>
+  <%= f.button :submit, 'Create User' %>
+
+<% end %>

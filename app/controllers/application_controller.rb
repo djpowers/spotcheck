@@ -11,7 +11,11 @@ class ApplicationController < ActionController::Base
 
   protected
 
-    def configure_permitted_parameters
-      devise_parameter_sanitizer.for(:sign_up) << [:first_name, :last_name]
-    end
+  def flash_message
+    t("flash.#{controller_name}.#{action_name}")
+  end
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.for(:sign_up) << [:first_name, :last_name]
+  end
 end
