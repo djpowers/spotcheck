@@ -2,9 +2,17 @@
 <p><strong>Description</strong>: <%= @project.description %></p>
 <p><strong>Status</strong>: <%= @project.status %></p>
 <p><strong>Due Date</strong>: <%= @project.due_date %></p>
-<%= link_to 'Add New Member', new_project_membership_path(@project) %>
+<%= link_to 'Add New Member', new_project_membership_path(@project) %><br>
 
-
-<% @project.users.each do |user| %>
-  <%= user.email %>
-<% end %>
+<table>
+  <tbody>
+    <% @project.memberships.each do |membership| %>
+      <tr id=<%= "user_#{membership.user.id}" %>>
+        <td><%= membership.user.email %></td>
+        <td><%= membership.role %></td>
+        <td><%= link_to 'Remove User', membership_path(membership), method: :delete %></td>
+        <td><%= link_to 'Edit Role', edit_membership_path(membership) %></td><br>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

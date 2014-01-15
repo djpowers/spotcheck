@@ -32,6 +32,9 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+gem 'devise'
+gem 'simple_form'
+
 group :development, :test do
   gem 'factory_girl_rails'
   gem 'shoulda-matchers'
@@ -40,8 +43,6 @@ group :development, :test do
   gem 'valid_attribute'
   gem 'pry-rails'
   gem 'validates_email_format_of'
-  gem 'simple_form'
-  gem 'devise'
   gem 'launchy'
 end
 

@@ -1,7 +1,13 @@
-<%= simple_form_for([@project, @membership]) do |f| %>
+<% if @membership.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@membership.errors.count, "error") %> prohibited this event from being saved:</h2>
 
-  <%= f.input :email, label: 'User Email' %>
-  <%= f.input :role, as: :radio_buttons, collection: ['Creator', 'Collaborator'] %>
-  <%= f.button :submit, 'Create User' %>
-
+    <ul>
+    <% @membership.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
 <% end %>
+
+<%= render 'form' %>
