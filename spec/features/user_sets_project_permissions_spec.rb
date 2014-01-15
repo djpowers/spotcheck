@@ -47,6 +47,8 @@ feature 'user sets project permissions', %Q{
     expect(project.users).to include(new_member)
   end
 
+  scenario 'project creator adds member, blank form'
+
   scenario 'creator adds self to project, receives errors' do
     membership = FactoryGirl.create(:membership, role: 'creator')
     creator = membership.user
@@ -78,11 +80,21 @@ feature 'user sets project permissions', %Q{
     expect(page).to have_content('membership already exists.')
   end
 
-  scenario 'non-creator adds user to project'
+  scenario 'non-creator adds user to project, receives error' do
+    membership = FactoryGirl.create(:membership, role: 'collaborator')
+    user = membership.user
+    project = membership.project
+    sign_in_as(user)
+
+    visit project_path(project)
+    click_link 'Add New Member'
+
+    expect(page).to have_content('You are not authorized to add members to this group.')
+  end
 
   scenario 'authenticated collaborator views associated project'
 
-  scenario 'owner changes permission for a member' do
+  scenario 'creator changes permission for a member' do
     membership = FactoryGirl.create(:membership, role: 'creator')
     email = 'newbie@example.com'
     new_member = FactoryGirl.create(:user, email: email)
@@ -108,6 +120,8 @@ feature 'user sets project permissions', %Q{
       expect(page).to have_content('creator')
     end
   end
+
+  scenario 'collaborator changes permission, receives error'
 
   scenario 'owner deletes a member' do
     membership = FactoryGirl.create(:membership, role: 'creator')

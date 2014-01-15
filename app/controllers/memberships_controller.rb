@@ -1,5 +1,7 @@
 class MembershipsController < ApplicationController
 
+  before_action :authorize_user, only: [:new]
+
   # def index
   #   @project = Project.find(params[:project_id])
   # end
@@ -32,7 +34,11 @@ class MembershipsController < ApplicationController
   end
 
   def edit
-    @membership = Membership.find(params[:id])
+    @membership = Membership.find_by(id: params[:id])
+
+    if Membership.find_by(project: @membership.project, user: current_user).role == 'collaborator'
+      raise ActionController::RoutingError.new('Not Found')
+    end
   end
 
   def update
@@ -50,6 +56,18 @@ class MembershipsController < ApplicationController
 
     def membership_params
       params.require(:membership).permit(:role)
+    end
+
+    def authorize_user
+      @membership = Membership.find_by(user_id: current_user.id, project_id: params[:project_id])
+
+      if @membership.nil?
+        flash[:notice] = 'You are not a member of this group.'
+        redirect_to projects_path
+      elsif user_signed_in? and @membership.role == 'collaborator'
+        flash[:notice] = 'You are not authorized to add members to this group.'
+        redirect_to project_path(@membership.project)
+      end
     end
 
     def user
