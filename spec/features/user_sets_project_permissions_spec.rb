@@ -14,7 +14,21 @@ feature 'user sets project permissions', %Q{
   # users not on permission list are denied access
   # project settings only accessible by project creator
 
-  scenario 'user views project members'
+  scenario 'user views project members' do
+    membership = FactoryGirl.create(:membership, role: 'creator')
+    creator = membership.user
+    project = membership.project
+    email = 'newbie@example.com'
+    new_member = FactoryGirl.create(:user, email: email)
+    FactoryGirl.create(:membership, user_id: new_member.id, project_id: project.id)
+    sign_in_as(creator)
+
+    visit project_path(project)
+    expect(page).to have_content(new_member.first_name)
+    expect(page).to have_content(new_member.last_name)
+    expect(page).to have_content(new_member.email)
+    expect(page).to have_content(membership.role)
+  end
 
   scenario 'project creator adds collaborator to project' do
     membership = FactoryGirl.create(:membership, role: 'creator')
@@ -47,7 +61,22 @@ feature 'user sets project permissions', %Q{
     expect(page).to have_content('membership already exists.')
   end
 
-  scenario 'creator adds existing relationship, receives errors'
+  scenario 'creator adds existing relationship, receives errors' do
+    membership = FactoryGirl.create(:membership, role: 'creator')
+    creator = membership.user
+    project = membership.project
+    email = 'newbie@example.com'
+    new_member = FactoryGirl.create(:user, email: email)
+    FactoryGirl.create(:membership, user_id: new_member.id, project_id: project.id)
+    sign_in_as(creator)
+    visit project_path(project)
+
+    click_link 'Add New Member'
+    fill_in 'User Email', with: new_member.email
+    click_button 'Create User'
+
+    expect(page).to have_content('membership already exists.')
+  end
 
   scenario 'non-creator adds user to project'
 
