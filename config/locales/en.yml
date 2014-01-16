@@ -21,3 +21,7 @@
 
 en:
   hello: "Hello world"
+  flash:
+    memberships:
+      create:
+        notice: 'New user was successfully added to project.'

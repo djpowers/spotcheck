@@ -32,6 +32,9 @@ group :doc do
   gem 'sdoc', require: false
 end
 
+gem 'devise'
+gem 'simple_form'
+
 group :development, :test do
   gem 'factory_girl_rails'
   gem 'shoulda-matchers'
@@ -40,14 +43,15 @@ group :development, :test do
   gem 'valid_attribute'
   gem 'pry-rails'
   gem 'validates_email_format_of'
-  gem 'rails-erd'
-  gem 'simple_form'
-  gem 'devise'
   gem 'launchy'
 end
 
 group :development do
   gem 'quiet_assets'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'gist'
+  gem 'rails-erd'
 end
 
 # Use ActiveModel has_secure_password

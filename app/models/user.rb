@@ -8,8 +8,12 @@ class User < ActiveRecord::Base
   validates_presence_of :last_name
 
   has_many :comments
-  has_many :user_projects
+  has_many :memberships
   has_many :projects,
-    through: :user_projects
+    through: :memberships
+
+  def created_projects
+    projects.joins(:memberships).where("memberships.role = 'creator'")
+  end
 
 end

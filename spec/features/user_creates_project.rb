@@ -73,4 +73,21 @@ feature 'user creates project', %Q{
       end
     end
 
+    scenario 'user creates project and is listed as creator' do
+      user_sign_in
+      visit new_project_path
+      click_button 'Create Project'
+
+      creator_project = FactoryGirl.build(:project)
+      random_project = FactoryGirl.create(:project, title: 'Not Your Project')
+      fill_in 'Title', with: creator_project.title
+      fill_in 'Description', with: creator_project.description
+      fill_in 'Status', with: creator_project.status
+      click_button 'Create Project'
+
+      visit projects_path
+      expect(page).to have_content(creator_project.title)
+      expect(page).to_not have_content(random_project.title)
+    end
+
 end

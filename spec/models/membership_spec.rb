@@ -1,6 +1,8 @@
 require 'spec_helper'
 
-describe UserProject do
+describe Membership do
+
+  before(:all) {  }
 
   describe 'validations' do
     it { should validate_presence_of :user }
@@ -13,6 +15,13 @@ describe UserProject do
 
     it { should belong_to :user }
     it { should belong_to :project}
+
+    it do
+      FactoryGirl.create(:membership)
+      should validate_uniqueness_of(:project_id)
+      .scoped_to(:user_id)
+      .with_message('Membership already exists.')
+    end
   end
 
   describe 'database' do
