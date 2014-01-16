@@ -37,7 +37,7 @@ class MembershipsController < ApplicationController
     @membership = Membership.find_by(id: params[:id])
 
     if Membership.find_by(project: @membership.project, user: current_user).role == 'collaborator'
-      raise ActionController::RoutingError.new('Not Found')
+      flash[:notice] = 'You are not authorized to edit membership roles in this group.'
     end
   end
 

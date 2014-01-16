@@ -47,7 +47,18 @@ feature 'user sets project permissions', %Q{
     expect(project.users).to include(new_member)
   end
 
-  scenario 'project creator adds member, blank form'
+  scenario 'project creator adds member, blank form' do
+    membership = FactoryGirl.create(:membership, role: 'creator')
+    creator = membership.user
+    project = membership.project
+    sign_in_as(creator)
+    visit project_path(project)
+
+    click_link 'Add New Member'
+    click_button 'Create User'
+
+    expect(page).to have_content("can't be blank")
+  end
 
   scenario 'creator adds self to project, receives errors' do
     membership = FactoryGirl.create(:membership, role: 'creator')
@@ -80,7 +91,7 @@ feature 'user sets project permissions', %Q{
     expect(page).to have_content('membership already exists.')
   end
 
-  scenario 'non-creator adds user to project, receives error' do
+  scenario 'collaborator adds user to project, receives error' do
     membership = FactoryGirl.create(:membership, role: 'collaborator')
     user = membership.user
     project = membership.project
@@ -92,7 +103,41 @@ feature 'user sets project permissions', %Q{
     expect(page).to have_content('You are not authorized to add members to this group.')
   end
 
-  scenario 'authenticated collaborator views associated project'
+  scenario 'collaborator changes permission, receives error' do
+    membership = FactoryGirl.create(:membership, role: 'collaborator')
+    user = membership.user
+    project = membership.project
+    sign_in_as(user)
+
+    visit project_path(project)
+    click_link 'Edit Role'
+    expect(page).to have_content('You are not authorized to edit membership roles in this group.')
+  end
+
+  scenario 'collaborator views associated project, denied' do
+    membership = FactoryGirl.create(:membership, role: 'creator')
+    email = 'newbie@example.com'
+    new_member = FactoryGirl.create(:user, email: email)
+    creator = membership.user
+    project = membership.project
+
+    sign_in_as(new_member)
+    visit project_path(project)
+    expect(page).to have_content('Access Denied.')
+    click_link 'Sign Out'
+
+    sign_in_as(creator)
+    visit project_path(project)
+
+    click_link 'Add New Member'
+    fill_in 'User Email', with: email
+    click_button 'Create User'
+    click_link 'Sign Out'
+
+    sign_in_as(new_member)
+    visit project_path(project)
+    expect(page).to have_content(new_member.email)
+  end
 
   scenario 'creator changes permission for a member' do
     membership = FactoryGirl.create(:membership, role: 'creator')
@@ -120,8 +165,6 @@ feature 'user sets project permissions', %Q{
       expect(page).to have_content('creator')
     end
   end
-
-  scenario 'collaborator changes permission, receives error'
 
   scenario 'owner deletes a member' do
     membership = FactoryGirl.create(:membership, role: 'creator')
