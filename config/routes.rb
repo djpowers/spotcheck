@@ -1,9 +1,9 @@
 Spotcheck::Application.routes.draw do
   devise_for :users
   resources :projects do
-    resources :memberships, only: [:new, :create]
+    resources :memberships #, only: [:index, :destroy, :new, :create, :edit, :update]
   end
-  resources :memberships, only: [:show, :destroy, :edit, :update]
+
   root 'pages#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

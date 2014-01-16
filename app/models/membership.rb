@@ -1,11 +1,7 @@
 class Membership < ActiveRecord::Base
 
   validates_presence_of :user
-  validates_numericality_of :user_id
-
   validates_presence_of :project
-  validates_numericality_of :project_id
-
   validates_presence_of :role
 
   validates_uniqueness_of :project_id,
@@ -17,4 +13,11 @@ class Membership < ActiveRecord::Base
 
   attr_accessor :email
 
+  def creator?
+    role == 'creator'
+  end
+
+  def collaborator?
+    role == 'collaborator'
+  end
 end

@@ -9,7 +9,7 @@ feature 'user sets project permissions', %Q{
   # Acceptance Criteria
   #
   # permissions option is present for each project
-  # user specifies list of email addresses to grant access
+  # user enters a registered email address to grant access to that user
   # users on permission list can access project when authenticated
   # users not on permission list are denied access
   # project settings only accessible by project creator
@@ -57,7 +57,7 @@ feature 'user sets project permissions', %Q{
     click_link 'Add New Member'
     click_button 'Create User'
 
-    expect(page).to have_content('Please enter the email address of a registered user.')
+    expect(page).to have_content('must match email of a registered user.')
   end
 
   scenario 'creator submits unregistered email address in add member' do
@@ -71,7 +71,7 @@ feature 'user sets project permissions', %Q{
     fill_in 'User Email', with: 'random@test.com'
     click_button 'Create User'
 
-    expect(page).to have_content('Please enter the email address of a registered user.')
+    expect(page).to have_content('must match email of a registered user.')
   end
 
   scenario 'creator adds self to project, receives errors' do
@@ -114,7 +114,7 @@ feature 'user sets project permissions', %Q{
     visit project_path(project)
     click_link 'Add New Member'
 
-    expect(page).to have_content('You are not authorized to add members to this group.')
+    expect(page).to have_content('You are not authorized to manage members in this group')
   end
 
   scenario 'collaborator changes permission, receives error' do
@@ -125,7 +125,7 @@ feature 'user sets project permissions', %Q{
 
     visit project_path(project)
     click_link 'Edit Role'
-    expect(page).to have_content('You are not authorized to edit membership roles in this group.')
+    expect(page).to have_content('You are not authorized to manage members in this group')
   end
 
   scenario 'collaborator views associated project, denied' do
