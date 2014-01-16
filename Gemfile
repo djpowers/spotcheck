@@ -34,6 +34,7 @@ end
 
 gem 'devise'
 gem 'simple_form'
+gem 'foundation-rails', '5.0.2.0'
 
 group :development, :test do
   gem 'factory_girl_rails'

@@ -1,32 +1,60 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Spotcheck</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<nav>
-  <ul>
+    <title><%= content_for?(:title) ? yield(:title) : "Spotcheck" %></title>
+
+    <%= stylesheet_link_tag    "application" %>
+    <%= javascript_include_tag "vendor/modernizr" %>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <body>
+
+  <nav class="top-bar" data-topbar>
+    <ul class="title-area">
+      <li class="name">
+        <h1><a href=/>Spotcheck</a><h1>
+      </li>
+      <li class="toggle-topbar menu-con"><a href="#">Menu</a><li>
+    </ul>
+
+    <section class="top-bar-section">
+      <ul class="right">
+        <% if user_signed_in? %>
+          <li class="has-dropdown">
+            <a href="#"><%= current_user.first_name + ' ' + current_user.last_name %></a>
+            <ul class="dropdown">
+              <li class="active"><%= link_to 'Sign Out', destroy_user_session_path, method: :delete %></li>
+            </ul>
+        <% else %>
+          <li class="has-dropdown">
+            <a href="#">Get Started</a>
+            <ul class="dropdown">
+              <li><%= link_to 'Sign In', new_user_session_path %></li>
+              <li><%= link_to 'Sign Up', new_user_registration_path %></li>
+            </ul>
+          </li>
+        <% end %>
+      </ul>
+
     <% if user_signed_in? %>
-      <%= current_user.email %>
-      <li><%= link_to 'Sign Out', destroy_user_session_path, method: :delete %></li>
-    <% else %>
-      <li><%= link_to 'Sign In', new_user_session_path %></li>
-      <li><%= link_to 'Sign Up', new_user_registration_path %></li>
+      <ul class="left">
+        <li><a href="#">Projects</a></li>
+      </ul>
     <% end %>
-  </ul>
-</nav>
+    </section>
+  </nav>
 
-<span id="flashes">
-  <% flash.each do |name, msg| -%>
+  <span id="flashes">
+    <% flash.each do |name, msg| -%>
       <%= content_tag :div, msg, class: name %>
     <% end -%>
-</span>
+  </span>
 
-<%= yield %>
-
-</body>
+    <%= yield %>
+    <%= javascript_include_tag "application" %>
+  </body>
 </html>
