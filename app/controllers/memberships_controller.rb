@@ -1,49 +1,35 @@
 class MembershipsController < ApplicationController
 
-  before_action :authorize_user, only: [:new]
-
-  # def index
-  #   @project = Project.find(params[:project_id])
-  # end
+  before_action :authorize_creator, only: [:new, :edit, :destroy, :update]
+  before_action :get_project, only: [:new, :create, :edit, :destroy]
 
   def new
-    @project = Project.find(params[:project_id])
     @membership = @project.memberships.build
   end
 
   def create
-    @project = Project.find(params[:project_id])
     @membership = @project.memberships.build(membership_params)
-    @membership.user = user
+    @membership.user = User.find_by(email: params[:membership][:email])
 
     if @membership.save
       flash[:notice] = 'New user was successfully added to project.'
       redirect_to project_path(@project)
-    elsif @membership.errors.messages.values.flatten.include?('Membership already exists.')
-      flash[:notice] = 'Membership already exists.'
-      redirect_to project_path(@project)
     else
-      flash[:notice] = "Please enter the email address of a registered user."
-      redirect_to new_project_membership_path(@project)
+      @membership.errors.add(:email, "must match email of a registered user.")
+      render :new
     end
   end
 
   def destroy
     @membership = Membership.find(params[:id])
-    project = @membership.project
 
     @membership.destroy
     flash[:notice] = 'User has been removed from this project.'
-    redirect_to project_path(project)
+    redirect_to project_path(@project)
   end
 
   def edit
-    @membership = Membership.find_by(id: params[:id])
-
-    if Membership.find_by(project: @membership.project, user: current_user).role == 'collaborator'
-      flash[:notice] = 'You are not authorized to edit membership roles in this group.'
-      redirect_to project_path(@membership.project)
-    end
+    @membership = Membership.find(params[:id])
   end
 
   def update
@@ -63,20 +49,18 @@ class MembershipsController < ApplicationController
       params.require(:membership).permit(:role)
     end
 
-    def authorize_user
-      @membership = Membership.find_by(user_id: current_user.id, project_id: params[:project_id])
+    def get_project
+      @project = Project.find(params[:project_id])
+    end
 
-      if @membership.nil?
-        flash[:notice] = 'You are not a member of this group.'
-        redirect_to projects_path
-      elsif user_signed_in? and @membership.role == 'collaborator'
-        flash[:notice] = 'You are not authorized to add members to this group.'
-        redirect_to project_path(@membership.project)
+    def current_membership
+      @current_membership ||= Membership.find_by(user: current_user, project_id:  params[:project_id])
+    end
+
+    def authorize_creator
+      unless current_membership.creator?
+        flash[:notice] = 'You are not authorized to manage members in this group.'
+        redirect_to project_path(params[:project_id])
       end
     end
-
-    def user
-      User.find_by(email: params[:membership][:email])
-    end
-
 end

@@ -22,8 +22,8 @@
         <td><%= membership.user.first_name + ' ' + membership.user.last_name %></td>
         <td><%= membership.user.email %></td>
         <td><%= membership.role %></td>
-        <td><%= link_to 'Edit Role', edit_membership_path(membership) %></td><br>
-        <td><%= link_to 'Remove User', membership_path(membership), method: :delete %></td>
+        <td><%= link_to 'Edit Role', edit_project_membership_path(@project, membership) %></td><br>
+        <td><%= link_to 'Remove User', project_membership_path(@project, membership), method: :delete %></td>
       </tr>
     <% end %>
   </tbody>
