@@ -14,7 +14,7 @@ feature 'user sets project permissions', %Q{
   # users not on permission list are denied access
   # project settings only accessible by project creator
 
-  scenario 'user views project members' do
+  scenario 'user creates project and views project members' do
     membership = FactoryGirl.create(:membership, role: 'creator')
     creator = membership.user
     project = membership.project
@@ -27,7 +27,7 @@ feature 'user sets project permissions', %Q{
     expect(page).to have_content(new_member.first_name)
     expect(page).to have_content(new_member.last_name)
     expect(page).to have_content(new_member.email)
-    expect(page).to have_content(membership.role)
+    expect(page).to have_content('creator')
   end
 
   scenario 'project creator adds collaborator to project' do
@@ -47,7 +47,7 @@ feature 'user sets project permissions', %Q{
     expect(project.users).to include(new_member)
   end
 
-  scenario 'project creator adds member, blank form' do
+  scenario 'creator adds member, blank form' do
     membership = FactoryGirl.create(:membership, role: 'creator')
     creator = membership.user
     project = membership.project
@@ -57,7 +57,21 @@ feature 'user sets project permissions', %Q{
     click_link 'Add New Member'
     click_button 'Create User'
 
-    expect(page).to have_content("can't be blank")
+    expect(page).to have_content('Please enter the email address of a registered user.')
+  end
+
+  scenario 'creator submits unregistered email address in add member' do
+    membership = FactoryGirl.create(:membership, role: 'creator')
+    creator = membership.user
+    project = membership.project
+    sign_in_as(creator)
+    visit project_path(project)
+
+    click_link 'Add New Member'
+    fill_in 'User Email', with: 'random@test.com'
+    click_button 'Create User'
+
+    expect(page).to have_content('Please enter the email address of a registered user.')
   end
 
   scenario 'creator adds self to project, receives errors' do
@@ -71,7 +85,7 @@ feature 'user sets project permissions', %Q{
     fill_in 'User Email', with: creator.email
     click_button 'Create User'
 
-    expect(page).to have_content('membership already exists.')
+    expect(page).to have_content('Membership already exists.')
   end
 
   scenario 'creator adds existing relationship, receives errors' do
@@ -88,7 +102,7 @@ feature 'user sets project permissions', %Q{
     fill_in 'User Email', with: new_member.email
     click_button 'Create User'
 
-    expect(page).to have_content('membership already exists.')
+    expect(page).to have_content('Membership already exists.')
   end
 
   scenario 'collaborator adds user to project, receives error' do

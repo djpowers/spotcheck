@@ -15,7 +15,7 @@ class ProjectsController < ApplicationController
     @project = Project.new(project_params)
 
     if @project.save
-      @membership = current_user.memberships.build(project_id: @project.id)
+      @membership = current_user.memberships.build(project_id: @project.id, role: 'creator')
       @membership.save
       flash[:notice] = 'Project was successfully created.'
       redirect_to @project

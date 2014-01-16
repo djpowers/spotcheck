@@ -20,7 +20,7 @@ describe Membership do
       FactoryGirl.create(:membership)
       should validate_uniqueness_of(:project_id)
       .scoped_to(:user_id)
-      .with_message('membership already exists.')
+      .with_message('Membership already exists.')
     end
   end
 

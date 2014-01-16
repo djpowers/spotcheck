@@ -10,7 +10,7 @@ class Membership < ActiveRecord::Base
 
   validates_uniqueness_of :project_id,
     scope: :user_id,
-    message: 'membership already exists.'
+    message: 'Membership already exists.'
 
   belongs_to :user
   belongs_to :project

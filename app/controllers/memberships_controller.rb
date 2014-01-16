@@ -19,8 +19,12 @@ class MembershipsController < ApplicationController
     if @membership.save
       flash[:notice] = 'New user was successfully added to project.'
       redirect_to project_path(@project)
+    elsif @membership.errors.messages.values.flatten.include?('Membership already exists.')
+      flash[:notice] = 'Membership already exists.'
+      redirect_to project_path(@project)
     else
-      render 'new'
+      flash[:notice] = "Please enter the email address of a registered user."
+      redirect_to new_project_membership_path(@project)
     end
   end
 
@@ -38,6 +42,7 @@ class MembershipsController < ApplicationController
 
     if Membership.find_by(project: @membership.project, user: current_user).role == 'collaborator'
       flash[:notice] = 'You are not authorized to edit membership roles in this group.'
+      redirect_to project_path(@membership.project)
     end
   end
 
