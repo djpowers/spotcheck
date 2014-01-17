@@ -12,7 +12,7 @@ class MembershipsController < ApplicationController
     @membership.user = User.find_by(email: params[:membership][:email])
 
     if @membership.save
-      flash[:notice] = 'New user was successfully added to project.'
+      flash[:success] = 'New user was successfully added to project.'
       redirect_to project_path(@project)
     else
       @membership.errors.add(:email, "must match email of a registered user.")
