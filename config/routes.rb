@@ -1,7 +1,8 @@
 Spotcheck::Application.routes.draw do
   devise_for :users
   resources :projects do
-    resources :memberships #, only: [:index, :destroy, :new, :create, :edit, :update]
+    resources :memberships, only: [:index, :destroy, :new, :create, :edit, :update]
+    resources :videos, only: [:new, :index, :create]
   end
 
   root 'pages#index'

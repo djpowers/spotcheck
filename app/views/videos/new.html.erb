@@ -1,0 +1,8 @@
+<%= simple_form_for([@project, @video]) do |f| %>
+
+  <%= f.input :resource %>
+  <%= f.input :revision_number, label: 'Revision Number' %>
+  <%= f.hidden_field :approved, value: false  %>
+  <%= f.button :submit %>
+
+<% end %>
