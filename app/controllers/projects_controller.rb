@@ -5,6 +5,8 @@ class ProjectsController < ApplicationController
 
   def index
     @projects = current_user.projects
+    @created_projects = current_user.memberships.where(role: 'creator').map{ |membership| membership.project }
+    @collaborated_projects = current_user.memberships.where(role: 'collaborator').map{ |membership| membership.project }
   end
 
   def new

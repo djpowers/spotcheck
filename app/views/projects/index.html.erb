@@ -1,19 +1,41 @@
 <%= link_to 'New Project', new_project_path %>
 
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @projects.each do |project| %>
+<% if @created_projects.present? %>
+  <table>
+    <thead>
       <tr>
-        <td><%= project.title %></td>
-        <td><%= link_to 'Show', project_path(project) %></td>
-        <td><%= link_to 'Delete' %></td>
+        <th>Your Creations</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody class="created">
+      <% @created_projects.each do |project| %>
+        <tr id=<%= "project_#{project.id}" %>>
+          <td><%= project.title %></td>
+          <td><%= link_to 'Show', project_path(project) %></td>
+          <td><%= link_to 'Delete' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<% if @collaborated_projects.present? %>
+  <table>
+    <thead>
+      <tr>
+        <th>Your Collaborations</th>
+      </tr>
+    </thead>
+
+    <tbody class="collaborated">
+      <% @collaborated_projects.each do |project| %>
+        <tr id=<%= "project_#{project.id}" %>>
+          <td><%= project.title %></td>
+          <td><%= link_to 'Show', project_path(project) %></td>
+          <td><%= link_to 'Delete' %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

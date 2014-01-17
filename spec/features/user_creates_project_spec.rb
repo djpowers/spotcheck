@@ -13,14 +13,7 @@ feature 'user creates project', %Q{
   # creating a project shows an empty project window
   # empty project name triggers error message
 
-  def user_sign_in
-    user = FactoryGirl.create(:user)
-    visit root_path
-    click_link 'Sign In'
-    fill_in 'Email', with: user.email
-    fill_in 'Password', with: user.password
-    click_button 'Sign In'
-  end
+  let(:user) { FactoryGirl.create(:user) }
 
   scenario 'user is not authenticated' do
     visit new_project_path
@@ -29,7 +22,7 @@ feature 'user creates project', %Q{
   end
 
   scenario 'required information is supplied' do
-    user_sign_in
+    sign_in_as(user)
     click_link 'New Project'
 
     project = FactoryGirl.build(:project)
@@ -63,31 +56,31 @@ feature 'user creates project', %Q{
     expect(page).to have_content("2014-02-28 17:00")
   end
 
-    scenario 'required information is not supplied' do
-      user_sign_in
-      visit new_project_path
-      click_button 'Create Project'
+  scenario 'required information is not supplied' do
+    sign_in_as(user)
+    visit new_project_path
+    click_button 'Create Project'
 
-      within '.input.project_title' do
-        expect(page).to have_content("can't be blank")
-      end
+    within '.input.project_title' do
+      expect(page).to have_content("can't be blank")
     end
+  end
 
-    scenario 'user creates project and is listed as creator' do
-      user_sign_in
-      visit new_project_path
-      click_button 'Create Project'
+  scenario 'user creates project and is listed as creator' do
+    sign_in_as(user)
+    visit new_project_path
+    click_button 'Create Project'
 
-      creator_project = FactoryGirl.build(:project)
-      random_project = FactoryGirl.create(:project, title: 'Not Your Project')
-      fill_in 'Title', with: creator_project.title
-      fill_in 'Description', with: creator_project.description
-      fill_in 'Status', with: creator_project.status
-      click_button 'Create Project'
+    creator_project = FactoryGirl.build(:project)
+    random_project = FactoryGirl.create(:project, title: 'Not Your Project')
+    fill_in 'Title', with: creator_project.title
+    fill_in 'Description', with: creator_project.description
+    fill_in 'Status', with: creator_project.status
+    click_button 'Create Project'
 
-      visit projects_path
-      expect(page).to have_content(creator_project.title)
-      expect(page).to_not have_content(random_project.title)
-    end
+    visit projects_path
+    expect(page).to have_content(creator_project.title)
+    expect(page).to_not have_content(random_project.title)
+  end
 
 end

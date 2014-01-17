@@ -42,7 +42,7 @@
 
     <% if user_signed_in? %>
       <ul class="left">
-        <li><a href="#">Projects</a></li>
+        <li><%= link_to 'Projects', projects_path %></li>
       </ul>
     <% end %>
     </section>
