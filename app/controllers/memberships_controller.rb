@@ -59,7 +59,7 @@ class MembershipsController < ApplicationController
 
     def authorize_creator
       unless current_membership.creator?
-        flash[:notice] = 'You are not authorized to manage members in this group.'
+        flash[:notice] = 'You are not authorized to manage members in this project.'
         redirect_to project_path(params[:project_id])
       end
     end

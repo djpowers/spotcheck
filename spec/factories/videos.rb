@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :video do
-    resource 'http://example.com'
+    video_file 'http://example.com'
     revision_number 1
     approved false
     project

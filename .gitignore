@@ -15,4 +15,6 @@
 /log/*.log
 /tmp
 
+.env
 .secret
+public/uploads
