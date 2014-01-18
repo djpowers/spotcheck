@@ -12,7 +12,7 @@ class MembershipsController < ApplicationController
     @membership.user = User.find_by(email: params[:membership][:email])
 
     if @membership.save
-      flash[:notice] = 'New user was successfully added to project.'
+      flash[:success] = 'New user was successfully added to project.'
       redirect_to project_path(@project)
     else
       @membership.errors.add(:email, "must match email of a registered user.")
@@ -59,7 +59,7 @@ class MembershipsController < ApplicationController
 
     def authorize_creator
       unless current_membership.creator?
-        flash[:notice] = 'You are not authorized to manage members in this group.'
+        flash[:notice] = 'You are not authorized to manage members in this project.'
         redirect_to project_path(params[:project_id])
       end
     end

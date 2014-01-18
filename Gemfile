@@ -34,7 +34,9 @@ end
 
 gem 'devise'
 gem 'simple_form'
-gem 'foundation-rails', '5.0.2.0'
+gem 'foundation-rails'
+gem 'carrierwave'
+gem "fog", "~> 1.3.1"
 
 group :development, :test do
   gem 'factory_girl_rails'
@@ -45,6 +47,7 @@ group :development, :test do
   gem 'pry-rails'
   gem 'validates_email_format_of'
   gem 'launchy'
+  gem 'dotenv-rails'
 end
 
 group :development do

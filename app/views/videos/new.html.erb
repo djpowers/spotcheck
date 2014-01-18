@@ -1,0 +1,11 @@
+<%= simple_form_for([@project, @video]) do |f| %>
+
+  <div>
+    <%= f.label :video_file, 'Video Upload' %>
+    <%= f.file_field :video_file %>
+  </div>
+  <%= f.input :revision_number, label: 'Revision Number' %>
+  <%= f.hidden_field :approved, value: false  %>
+  <%= f.button :submit %>
+
+<% end %>

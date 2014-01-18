@@ -114,7 +114,7 @@ feature 'user sets project permissions', %Q{
     visit project_path(project)
     click_link 'Add New Member'
 
-    expect(page).to have_content('You are not authorized to manage members in this group')
+    expect(page).to have_content('You are not authorized to manage members in this project.')
   end
 
   scenario 'collaborator changes permission, receives error' do
@@ -125,7 +125,7 @@ feature 'user sets project permissions', %Q{
 
     visit project_path(project)
     click_link 'Edit Role'
-    expect(page).to have_content('You are not authorized to manage members in this group')
+    expect(page).to have_content('You are not authorized to manage members in this project.')
   end
 
   scenario 'collaborator views associated project, denied' do

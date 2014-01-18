@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 20140110221156) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "videos", force: true do |t|
-    t.string   "title",                           null: false
+    t.string   "video_file",                      null: false
     t.integer  "revision_number",                 null: false
     t.boolean  "approved",        default: false, null: false
     t.integer  "project_id",                      null: false
