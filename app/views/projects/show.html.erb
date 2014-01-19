@@ -12,6 +12,7 @@
       <tr>
         <th>Revision #</th>
         <th>Approved?</th>
+        <th>Uploaded At</th>
       </tr>
     </thead>
 
@@ -20,6 +21,7 @@
         <tr id=<%= "video_#{video.id}" %>>
           <td><%= video.revision_number %></td>
           <td><%= video.approved %></td>
+          <td><%= video.created_at %></td>
           <td><%= link_to 'Show', project_video_path(video.project, video) %></td>
         </tr>
       <% end %>

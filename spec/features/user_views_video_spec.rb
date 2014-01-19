@@ -34,6 +34,7 @@ feature 'user views video', %Q{
     end
     expect(page).to have_content(video.revision_number)
     expect(page).to have_content(video.approved)
+    expect(page).to have_content(video.created_at)
   end
 
   scenario 'collaborator views video' do
@@ -55,6 +56,7 @@ feature 'user views video', %Q{
     end
     expect(page).to have_content(video.revision_number)
     expect(page).to have_content(video.approved)
+    expect(page).to have_content(video.created_at)
   end
 
   scenario 'unassociated user views video, is denied' do
