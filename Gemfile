@@ -37,6 +37,7 @@ gem 'simple_form'
 gem 'foundation-rails'
 gem 'carrierwave'
 gem "fog", "~> 1.3.1"
+gem 'coveralls', require: false
 
 group :development, :test do
   gem 'factory_girl_rails'

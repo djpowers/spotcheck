@@ -72,7 +72,6 @@ feature 'user adds comment to video', %Q{
     video = FactoryGirl.create(:video)
     project = video.project
     FactoryGirl.create(:membership, user: user, project: project, role: 'collaborator')
-    comment = FactoryGirl.build(:comment)
     sign_in_as(user)
     visit project_video_path(project, video)
 
