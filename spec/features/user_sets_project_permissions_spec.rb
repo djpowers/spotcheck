@@ -137,7 +137,7 @@ feature 'user sets project permissions', %Q{
 
     sign_in_as(new_member)
     visit project_path(project)
-    expect(page).to have_content('Access Denied.')
+    expect(page).to have_content('You are not authorized to view this project.')
     click_link 'Sign Out'
 
     sign_in_as(creator)
@@ -208,7 +208,7 @@ feature 'user sets project permissions', %Q{
     user = FactoryGirl.create(:user)
     sign_in_as(user)
     visit project_path(membership.project)
-    expect(page).to have_content 'Access Denied.'
+    expect(page).to have_content 'You are not authorized to view this project.'
   end
 
 end

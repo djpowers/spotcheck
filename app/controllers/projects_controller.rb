@@ -40,7 +40,8 @@ class ProjectsController < ApplicationController
     def authorize_user
       @project = Project.find(params[:id])
       unless user_signed_in? and @project.viewable_by?(current_user)
-        redirect_to root_path, alert: 'Access Denied.'
+        flash[:alert] = 'You are not authorized to view this project.'
+        redirect_to projects_path
       end
     end
 

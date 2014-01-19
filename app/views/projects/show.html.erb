@@ -20,6 +20,7 @@
         <tr id=<%= "video_#{video.id}" %>>
           <td><%= video.revision_number %></td>
           <td><%= video.approved %></td>
+          <td><%= link_to 'Show', project_video_path(video.project, video) %></td>
         </tr>
       <% end %>
     </tbody>

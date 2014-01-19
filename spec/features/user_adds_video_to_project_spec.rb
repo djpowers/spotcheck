@@ -38,6 +38,26 @@ feature 'user adds video to project', %Q{
       expect(Video.last.video_file.url).to be_present
     end
 
+    scenario 'creator specifies invalid video format' do
+      membership = FactoryGirl.create(:membership, role: 'creator')
+      creator = membership.user
+      project = membership.project
+      sign_in_as(creator)
+
+      click_link 'Projects'
+      within "#project_#{project.id}" do
+        click_link 'Show'
+      end
+
+      click_link 'Upload Video'
+
+      attach_file 'Video Upload', Rails.root.join('spec/file_fixtures/invalid_file.rtf')
+      fill_in 'Revision Number', with: 1
+      click_button 'Create Video'
+
+      expect(page).to have_content('Please specify a valid file to upload.')
+    end
+
     scenario 'created adds video, submits blank form' do
       membership = FactoryGirl.create(:membership, role: 'creator')
       creator = membership.user
@@ -52,7 +72,7 @@ feature 'user adds video to project', %Q{
       click_link 'Upload Video'
       click_button 'Create Video'
 
-      expect(page).to have_content('Please specify a file to upload.')
+      expect(page).to have_content('Please specify a valid file to upload.')
       within '.video_revision_number' do
         expect(page).to have_content('is not a number')
       end
