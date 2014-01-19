@@ -40,8 +40,44 @@ feature 'user adds comment to video', %Q{
     expect(page).to have_content(comment.body)
   end
 
-  scenario 'collaborator comments on video'
+  scenario 'collaborator comments on video' do
+    user = FactoryGirl.create(:user)
+    video = FactoryGirl.create(:video)
+    project = video.project
+    FactoryGirl.create(:membership, user: user, project: project, role: 'collaborator')
+    comment = FactoryGirl.build(:comment)
+    sign_in_as(user)
 
-  scenario 'unassociated user attempts, receives error'
+    click_link 'Projects'
+
+    within "#project_#{project.id}" do
+      click_link 'Show'
+    end
+
+    within "#video_#{video.id}" do
+      click_link 'Show'
+    end
+
+    fill_in 'Body', with: comment.body
+    fill_in 'Timecode Start', with: comment.timecode_start
+    fill_in 'Timecode End', with: comment.timecode_end
+    click_button 'Create Comment'
+
+    expect(page).to have_content('Comment was successfully added.')
+    expect(page).to have_content(comment.body)
+  end
+
+  scenario 'collaborator submits blank comment' do
+    user = FactoryGirl.create(:user)
+    video = FactoryGirl.create(:video)
+    project = video.project
+    FactoryGirl.create(:membership, user: user, project: project, role: 'collaborator')
+    comment = FactoryGirl.build(:comment)
+    sign_in_as(user)
+    visit project_video_path(project, video)
+
+    click_button 'Create Comment'
+    expect(page).to have_content("Comment body can't be blank.")
+  end
 
 end
