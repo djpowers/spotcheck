@@ -61,5 +61,9 @@ feature 'user views project', %Q{
 
     click_link 'Projects'
     expect(page).to_not have_content(random_project.title)
+
+    visit project_path(random_project)
+    expect(page).to have_content('You are not authorized to view this project.')
+    expect(page).to have_link('New Project')
   end
 end

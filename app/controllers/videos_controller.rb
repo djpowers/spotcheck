@@ -1,6 +1,7 @@
 class VideosController < ApplicationController
 
   before_action :authorize_creator, only: [:new]
+  before_action :authorize_viewable, only: [:show]
 
   def new
     @project = Project.find(params[:project_id])
@@ -16,9 +17,14 @@ class VideosController < ApplicationController
       flash[:success] = 'Video was uploaded successfully.'
       redirect_to project_path(@project)
     else
-      flash[:error] = 'Please specify a file to upload.'
+      flash[:error] = 'Please specify a valid file to upload.'
       render :new
     end
+  end
+
+  def show
+    @video = Video.find(params[:id])
+    @project = Project.find(params[:project_id])
   end
 
   private
@@ -33,8 +39,15 @@ class VideosController < ApplicationController
 
     def authorize_creator
       unless current_membership.creator?
-        flash[:notice] = 'You are not authorized to upload videos for this project.'
+        flash[:error] = 'You are not authorized to upload videos for this project.'
         redirect_to project_path(params[:project_id])
+      end
+    end
+
+    def authorize_viewable
+      if current_membership.nil?
+        flash[:alert] = 'You are not authorized to view this project.'
+        redirect_to projects_path
       end
     end
 
