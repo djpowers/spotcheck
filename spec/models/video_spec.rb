@@ -8,6 +8,8 @@ describe Video do
 
     it { should validate_presence_of :project }
     it { should belong_to :project }
+
+    it { should have_many :comments }
   end
 
   describe 'database' do

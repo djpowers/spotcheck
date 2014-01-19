@@ -25,6 +25,8 @@ class VideosController < ApplicationController
   def show
     @video = Video.find(params[:id])
     @project = Project.find(params[:project_id])
+    @comment = Comment.new
+    @comments = @video.comments
   end
 
   private

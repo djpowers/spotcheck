@@ -6,6 +6,8 @@ class Video < ActiveRecord::Base
   validates_presence_of :project
   belongs_to :project
 
+  has_many :comments
+
   mount_uploader :video_file, VideoFileUploader
 
 end
