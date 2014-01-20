@@ -1,7 +1,8 @@
 spotcheck
 =========
 
-[![Coverage Status](https://coveralls.io/repos/djpowers/spotcheck/badge.png?branch=master)](https://coveralls.io/r/djpowers/spotcheck?branch=master)
+[![Build Status](https://travis-ci.org/djpowers/spotcheck.png?branch=master)](https://travis-ci.org/djpowers/spotcheck)
+
 SpotCheck helps you collect feedback on your in-progress videos
 
 

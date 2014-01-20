@@ -89,6 +89,6 @@ feature 'user adds video to project', %Q{
         click_link 'Show'
       end
       click_link 'Upload Video'
-      expect(page).to have_content('You are not authorized to upload videos for this project.')
+      expect(page).to have_content('You are not authorized to manage videos for this project.')
     end
   end
