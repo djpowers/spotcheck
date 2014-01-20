@@ -1,6 +1,6 @@
 class VideosController < ApplicationController
 
-  before_action :authorize_creator, only: [:new]
+  before_action :authorize_creator, only: [:new, :destroy]
   before_action :authorize_viewable, only: [:show]
 
   def new
@@ -29,6 +29,15 @@ class VideosController < ApplicationController
     @comments = @video.comments
   end
 
+  def destroy
+    @video = Video.find(params[:id])
+    @project = Project.find(params[:project_id])
+
+    @video.destroy
+    flash[:notice] = 'Video has been removed from the project.'
+    redirect_to project_path(@project)
+  end
+
   private
 
     def project_params
@@ -41,7 +50,7 @@ class VideosController < ApplicationController
 
     def authorize_creator
       unless current_membership.creator?
-        flash[:error] = 'You are not authorized to upload videos for this project.'
+        flash[:error] = 'You are not authorized to manage videos for this project.'
         redirect_to project_path(params[:project_id])
       end
     end

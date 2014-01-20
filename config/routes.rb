@@ -2,7 +2,7 @@ Spotcheck::Application.routes.draw do
   devise_for :users
   resources :projects do
     resources :memberships, only: [:index, :destroy, :new, :create, :edit, :update]
-    resources :videos, only: [:new, :index, :create, :show] do
+    resources :videos, only: [:new, :index, :create, :show, :destroy] do
       resources :comments, only: [:new, :create]
     end
   end

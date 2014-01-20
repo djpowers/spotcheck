@@ -21,7 +21,7 @@ describe User do
     end
 
     it { should have_many :comments }
-    it { should have_many :memberships }
+    it { should have_many(:memberships).dependent(:destroy) }
     it { should have_many(:projects).through(:memberships) }
   end
 

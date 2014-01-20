@@ -5,8 +5,8 @@ describe Project do
   describe 'validations' do
     it { should validate_presence_of :title }
 
-    it { should have_many :videos }
-    it { should have_many :memberships }
+    it { should have_many(:videos).dependent(:destroy) }
+    it { should have_many(:memberships).dependent(:destroy) }
     it { should have_many(:users).through(:memberships) }
   end
 

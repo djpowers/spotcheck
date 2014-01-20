@@ -23,6 +23,7 @@
           <td><%= video.approved %></td>
           <td><%= video.created_at %></td>
           <td><%= link_to 'Show', project_video_path(video.project, video) %></td>
+          <td><%= link_to 'Destroy', project_video_path(video.project, video), method: :delete, data: { confirm: 'Deleting a video will delete all associated comments. Are you sure?' } %></td>
         </tr>
       <% end %>
     </tbody>

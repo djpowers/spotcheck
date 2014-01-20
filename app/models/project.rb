@@ -2,8 +2,10 @@ class Project < ActiveRecord::Base
 
   validates_presence_of :title
 
-  has_many :videos
-  has_many :memberships
+  has_many :videos,
+    dependent: :destroy
+  has_many :memberships,
+    dependent: :destroy
   has_many :users,
     through: :memberships
 

@@ -8,7 +8,8 @@ class User < ActiveRecord::Base
   validates_presence_of :last_name
 
   has_many :comments
-  has_many :memberships
+  has_many :memberships,
+    dependent: :destroy
   has_many :projects,
     through: :memberships
 
