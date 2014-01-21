@@ -1,6 +1,6 @@
 class MembershipsController < ApplicationController
 
-  before_action :authorize_creator, only: [:new, :edit, :destroy, :update]
+  before_action :authorize_creator, only: [:new, :edit, :update]
   before_action :get_project, only: [:new, :create, :edit, :destroy]
 
   def new
@@ -22,10 +22,15 @@ class MembershipsController < ApplicationController
 
   def destroy
     @membership = Membership.find(params[:id])
-
-    @membership.destroy
-    flash[:notice] = 'User has been removed from this project.'
-    redirect_to project_path(@project)
+    if current_membership.creator?
+      @membership.destroy
+      flash[:notice] = 'User has been removed from this project.'
+      redirect_to project_path(@project)
+    elsif current_membership.user_id == current_user.id
+      @membership.destroy
+      flash[:notice] = 'You have been removed from the project.'
+      redirect_to projects_path
+    end
   end
 
   def edit

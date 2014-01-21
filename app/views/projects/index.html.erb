@@ -13,7 +13,7 @@
         <tr id=<%= "project_#{project.id}" %>>
           <td><%= project.title %></td>
           <td><%= link_to 'Show', project_path(project) %></td>
-          <td><%= link_to 'Delete' %></td>
+          <td><%= link_to 'Delete Project', project, method: :delete, data: { confirm: 'Deleting a project will delete all associated videos and comments. Are you sure?' } %></td>
         </tr>
       <% end %>
     </tbody>
@@ -33,7 +33,7 @@
         <tr id=<%= "project_#{project.id}" %>>
           <td><%= project.title %></td>
           <td><%= link_to 'Show', project_path(project) %></td>
-          <td><%= link_to 'Delete' %></td>
+          <td><%= link_to 'Remove Membership', project_membership_path(project, Membership.find_by(user: current_user, project: project)), method: :delete, data: { confirm: 'Removing your membership will revoke access to this project and its videos. Are you sure?' } %></td>
         </tr>
       <% end %>
     </tbody>
