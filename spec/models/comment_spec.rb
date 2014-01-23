@@ -5,11 +5,11 @@ describe Comment do
   describe 'validation' do
     it { should validate_presence_of :body }
 
-    it { should have_valid(:timecode_start).when('01:23:45:15', nil, '') }
-    it { should_not have_valid(:timecode_start).when('01234515') }
+    it { should have_valid(:timecode_start).when('01:23:45', nil, '') }
+    it { should_not have_valid(:timecode_start).when('012345') }
 
-    it { should have_valid(:timecode_end).when('01:23:45:15', nil, '') }
-    it { should_not have_valid(:timecode_end).when('01234515') }
+    it { should have_valid(:timecode_end).when('01:23:45', nil, '') }
+    it { should_not have_valid(:timecode_end).when('012345') }
 
     it { should validate_presence_of :user }
     it { should belong_to :user }

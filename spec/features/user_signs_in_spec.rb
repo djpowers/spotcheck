@@ -17,9 +17,11 @@ feature 'user signs in', %Q{
     user = FactoryGirl.create(:user)
     visit root_path
     click_link 'Sign In'
-    fill_in 'Email', with: user.email
-    fill_in 'Password', with: user.password
-    click_button 'Sign In'
+    within '.sign_in' do
+      fill_in 'Email', with: user.email
+      fill_in 'Password', with: user.password
+      click_button 'Sign In'
+    end
 
     expect(page).to have_content('Welcome back!')
     expect(page).to have_content('Sign Out')
@@ -29,9 +31,11 @@ feature 'user signs in', %Q{
   scenario 'a nonexistant email and password is supplied' do
     visit root_path
     click_link 'Sign In'
-    fill_in 'Email', with: 'nobody@example.com'
-    fill_in 'Password', with: 'password'
-    click_button 'Sign In'
+    within '.sign_in' do
+      fill_in 'Email', with: 'nobody@example.com'
+      fill_in 'Password', with: 'password'
+      click_button 'Sign In'
+    end
 
     expect(page).to have_content('Invalid email or password.')
     expect(page).to_not have_content('Welcome back!')
@@ -42,9 +46,11 @@ feature 'user signs in', %Q{
     user = FactoryGirl.create(:user)
     visit root_path
     click_link 'Sign In'
-    fill_in 'Email', with: user.email
-    fill_in 'Password', with: 'incorrectPassword'
-    click_button 'Sign In'
+    within '.sign_in' do
+      fill_in 'Email', with: user.email
+      fill_in 'Password', with: 'incorrectPassword'
+      click_button 'Sign In'
+    end
 
     expect(page).to have_content('Invalid email or password')
     expect(page).to_not have_content('Sign Out')
@@ -53,9 +59,11 @@ feature 'user signs in', %Q{
   scenario 'an already authenticated user cannot re-sign in' do
     user = FactoryGirl.create(:user)
     visit new_user_session_path
-    fill_in 'Email', with: user.email
-    fill_in 'Password', with: user.password
-    click_button 'Sign In'
+    within '.sign_in' do
+      fill_in 'Email', with: user.email
+      fill_in 'Password', with: user.password
+      click_button 'Sign In'
+    end
 
     expect(page).to have_content('Sign Out')
     expect(page).to_not have_content('Sign In')
@@ -70,9 +78,11 @@ feature 'user signs in', %Q{
     owner = project.user
     visit root_path
     click_link 'Sign In'
-    fill_in 'Email', with: owner.email
-    fill_in 'Password', with: owner.password
-    click_button 'Sign In'
+    within '.sign_in' do
+      fill_in 'Email', with: owner.email
+      fill_in 'Password', with: owner.password
+      click_button 'Sign In'
+    end
 
     expect(page).to have_content('Delete')
   end

@@ -1,9 +1,13 @@
-<% if @membership.errors.any? %>
-  <ul>
-  <% @membership.errors.full_messages.each do |msg| %>
-    <li><%= flash[:error] = msg %></li>
-  <% end %>
-  </ul>
-<% end %>
+<div class="row">
+  <div class="small-6 large-centered columns">
+    <% if @membership.errors.any? %>
+      <ul>
+      <% @membership.errors.full_messages.each do |msg| %>
+        <li><%= flash[:error] = msg %></li>
+      <% end %>
+      </ul>
+    <% end %>
 
-<%= render 'form' %>
+    <%= render 'form' %>
+  </div>
+</div>

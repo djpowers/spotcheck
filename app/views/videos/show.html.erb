@@ -1,57 +1,71 @@
-<h2><%= @project.title %></h2>
-<p><strong>Description</strong>: <%= @project.description %></p>
-<p><strong>Status</strong>: <%= @project.status %></p>
-<p><strong>Due Date</strong>: <%= @project.due_date %></p>
+<div class="row">
+  <div class="large-12 columns">
+    <h2><%= @project.title %></h2>
+    <p><strong>Description</strong>: <%= @project.description %></p>
+    <p><strong>Status</strong>: <%= @project.status %></p>
+    <p><strong>Due Date</strong>: <%= @project.due_date %></p>
+  </div>
+</div>
 
-<table>
-  <thead>
-    <tr>
-      <th>Revision Number</th>
-      <th>Approved?</th>
-      <th>Uploaded At</th>
-    </tr>
-  </thead>
+<div class="row">
+  <div class="large-4 columns">
+    <table>
+      <thead>
+        <tr>
+          <th>Revision Number</th>
+          <th>Approved?</th>
+          <th>Uploaded At</th>
+        </tr>
+      </thead>
 
-  <tbody>
-    <tr>
-      <td><%= @video.revision_number %></td>
-      <td><%= @video.approved %></td>
-      <td><%= @video.created_at %></td>
-    </tr>
-  </tbody>
-</table>
+      <tbody>
+        <tr>
+          <td><%= @video.revision_number %></td>
+          <td><%= @video.approved %></td>
+          <td><%= @video.created_at %></td>
+        </tr>
+      </tbody>
+    </table>
 
-<video src=<%= @video.video_file %>>
-</video>
+    <%= simple_form_for([@project, @video, @comment]) do |f| %>
 
-<%= simple_form_for([@project, @video, @comment]) do |f| %>
+    <%= f.input :body %>
+    <%= f.input :timecode_start, label: 'Timecode Start' %>
+    <%= f.input :timecode_end, label: 'Timecode End' %>
+    <%= f.button :submit %>
 
-  <%= f.input :body %>
-  <%= f.input :timecode_start, label: 'Timecode Start' %>
-  <%= f.input :timecode_end, label: 'Timecode End' %>
-  <%= f.button :submit %>
+    <% end %>
+  </div>
 
-<% end %>
+  <div class="large-8 columns">
+    <% if @video.comments.present? %>
+      <table>
+        <% @video.comments.each do |comment| %>
+          <thead>
+            <tr>
+              <th><%= comment.user.first_name + ' ' + comment.user.last_name %></th>
+              <th><%= comment.created_at %></th>
+            </tr>
+          </thead>
 
-<% if @video.comments.present? %>
+            <tbody>
+              <tr>
+                <td><%= comment.body %></td>
+                <td><%= comment.timecode_start %></td>
+                <td><%= comment.timecode_end %></td>
+              </tr>
+            </tbody>
+        <% end %>
+      </table>
+    <% end %>
+  </div>
 
-<table>
-  <% @video.comments.each do |comment| %>
-    <thead>
-      <tr>
-        <th><%= comment.user.first_name + ' ' + comment.user.last_name %></th>
-        <th><%= comment.created_at %></th>
-      </tr>
-    </thead>
+</div>
 
-    <tbody>
-      <tr>
-        <td><%= comment.body %></td>
-        <td><%= comment.timecode_start %></td>
-        <td><%= comment.timecode_end %></td>
-      </tr>
-    </tbody>
-  <% end %>
-</table>
+<div class="row">
+  <div class="large-centered columns">
+    <video src=<%= @video.video_file %> controls>
+    </video>
+  </div>
+</div>
 
-<% end %>

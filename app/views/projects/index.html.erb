@@ -1,41 +1,56 @@
-<%= link_to 'New Project', new_project_path, class: "button radius" %>
+<div class="row">
+  <div class="small-3 columns">
+    <%= link_to 'New Project', new_project_path, class: "large button radius" %>
+  </div>
+  <div class="small-9 columns">
+    <p>Projects contain each of your videos for a given job. Add your revisions as you work, grant others permission to create or collaborate.</p>
+  </div>
+</div>
 
 <% if @created_projects.present? %>
-  <table>
-    <thead>
-      <tr>
-        <th>Your Creations</th>
-      </tr>
-    </thead>
+  <div class="row">
+    <div class="small-6 large-centered columns">
+      <table>
+        <thead>
+          <tr>
+            <th>Your Creations</th>
+          </tr>
+        </thead>
 
-    <tbody class="created">
-      <% @created_projects.each do |project| %>
-        <tr id=<%= "project_#{project.id}" %>>
-          <td><%= project.title %></td>
-          <td><%= link_to 'Show', project_path(project) %></td>
-          <td><%= link_to 'Delete Project', project, method: :delete, data: { confirm: 'Deleting a project will delete all associated videos and comments. Are you sure?' } %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+        <tbody class="created">
+          <% @created_projects.each do |project| %>
+            <tr id=<%= "project_#{project.id}" %>>
+              <td><%= project.title %></td>
+              <td><%= link_to 'Show', project_path(project) %></td>
+              <td><%= link_to 'Delete Project', project, method: :delete, data: { confirm: 'Deleting a project will delete all associated videos and comments. Are you sure?' } %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 <% end %>
 
 <% if @collaborated_projects.present? %>
-  <table>
-    <thead>
-      <tr>
-        <th>Your Collaborations</th>
-      </tr>
-    </thead>
+  <div class="row">
+    <div class="small-6 large-centered columns">
+      <table>
+        <thead>
+          <tr>
+            <th>Your Collaborations</th>
+          </tr>
+        </thead>
 
-    <tbody class="collaborated">
-      <% @collaborated_projects.each do |project| %>
-        <tr id=<%= "project_#{project.id}" %>>
-          <td><%= project.title %></td>
-          <td><%= link_to 'Show', project_path(project) %></td>
-          <td><%= link_to 'Remove Membership', project_membership_path(project, Membership.find_by(user: current_user, project: project)), method: :delete, data: { confirm: 'Removing your membership will revoke access to this project and its videos. Are you sure?' } %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+        <tbody class="collaborated">
+          <% @collaborated_projects.each do |project| %>
+            <tr id=<%= "project_#{project.id}" %>>
+              <td><%= project.title %></td>
+              <td><%= link_to 'Show', project_path(project) %></td>
+              <td><%= link_to 'Remove Membership', project_membership_path(project, Membership.find_by(user: current_user, project: project)), method: :delete, data: { confirm: 'Removing your membership will revoke access to this project and its videos. Are you sure?' } %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 <% end %>

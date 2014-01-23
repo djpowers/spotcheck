@@ -1,4 +1,4 @@
-// 
+//
 // FOUNDATION SETTINGS
 //
 
@@ -36,7 +36,10 @@
 
 // We use these to control various global styles
 // $body-bg: #fff;
+$body-bg: image-url('dark_circles.png');
 // $body-font-color: #222;
+$body-font-color: #fff;
+$header-font-color: #fff;
 // $body-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 // $body-font-weight: normal;
 // $body-font-style: normal;
@@ -328,6 +331,7 @@
 // $form-label-font-size: rem-calc(14);
 // $form-label-font-weight: normal;
 // $form-label-font-color: lighten(#000, 30%);
+$form-label-font-color: #fff;
 // $form-label-bottom-margin: rem-calc(8);
 // $input-font-family: inherit;
 // $input-font-color: rgba(0,0,0,0.75);
@@ -466,7 +470,9 @@
 // $label-font-sizing: rem-calc(11);
 // $label-font-weight: normal;
 // $label-font-color: #333;
+$label-font-color: #fff;
 // $label-font-color-alt: #fff;
+$label-font-color-alt: #fff;
 // $label-font-family: $body-font-family;
 
 // Magellan

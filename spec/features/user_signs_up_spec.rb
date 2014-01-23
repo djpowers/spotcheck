@@ -16,12 +16,14 @@ feature 'user registers for site', %Q{
   scenario 'specifying valid and required information' do
     visit root_path
     click_link 'Sign Up'
-    fill_in 'First Name', with: 'Don'
-    fill_in 'Last Name', with: 'Draper'
-    fill_in 'Email', with: 'dondraper@sterlingcooper.com'
-    fill_in 'Password', with: 'password', match: :prefer_exact
-    fill_in 'Password Confirmation', with: 'password', match: :prefer_exact
-    click_button 'Sign up'
+    within '.sign_up' do
+      fill_in 'First Name', with: 'Don'
+      fill_in 'Last Name', with: 'Draper'
+      fill_in 'Email', with: 'dondraper@sterlingcooper.com'
+      fill_in 'Password', with: 'password', match: :prefer_exact
+      fill_in 'Password Confirmation', with: 'password', match: :prefer_exact
+      click_button 'Sign up'
+    end
 
     expect(page).to have_content("You've been registered.")
     expect(page).to have_content('Sign Out')
@@ -30,8 +32,9 @@ feature 'user registers for site', %Q{
   scenario 'required information is not supplied' do
     visit root_path
     click_link 'Sign Up'
-    click_button 'Sign up'
-
+    within '.sign_up' do
+      click_button 'Sign up'
+    end
     expect(page).to have_content("can't be blank")
     expect(page).to_not have_content("Sign Out")
   end
@@ -39,12 +42,11 @@ feature 'user registers for site', %Q{
   scenario 'password confirmation does not match password' do
     visit root_path
     click_link 'Sign Up'
-
-    fill_in 'user_password', with: 'password'
-    fill_in 'Password Confirmation', with: 'somethingDifferent'
-
-    click_button 'Sign up'
-
+    within '.sign_up' do
+      fill_in 'user_password', with: 'password'
+      fill_in 'Password Confirmation', with: 'somethingDifferent'
+      click_button 'Sign up'
+    end
     expect(page).to have_content("doesn't match")
     expect(page).to_not have_content("Sign Out")
   end
