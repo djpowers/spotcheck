@@ -40,6 +40,10 @@ gem 'coveralls', require: false
 gem 'foundation-icons-sass-rails'
 gem 'pickadate-rails'
 
+group :staging, :production do
+  gem 'rails_12factor'
+end
+
 group :development, :test do
   gem 'factory_girl_rails'
   gem 'shoulda-matchers'
