@@ -39,6 +39,7 @@ gem "fog", "~> 1.3.1"
 gem 'coveralls', require: false
 gem 'foundation-icons-sass-rails'
 gem 'pickadate-rails'
+gem 'sendgrid'
 
 group :staging, :production do
   gem 'rails_12factor'
