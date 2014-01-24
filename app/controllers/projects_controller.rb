@@ -42,7 +42,7 @@ class ProjectsController < ApplicationController
   private
 
     def project_params
-      params.require(:project).permit(:title, :description, :status, :due_date)
+      params.require(:project).permit(:title, :description, :status, :due_date, :due_time)
     end
 
     def authorize_user

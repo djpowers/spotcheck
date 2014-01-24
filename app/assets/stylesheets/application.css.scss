@@ -12,6 +12,10 @@
  *= require foundation_and_overrides
 
  *= require_tree .
+
+ *= require pickadate/default
+ *= require pickadate/default.date
+ *= require pickadate/default.time
  */
 
 @import 'foundation-icons';

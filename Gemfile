@@ -38,6 +38,7 @@ gem 'carrierwave'
 gem "fog", "~> 1.3.1"
 gem 'coveralls', require: false
 gem 'foundation-icons-sass-rails'
+gem 'pickadate-rails'
 
 group :development, :test do
   gem 'factory_girl_rails'

@@ -37,7 +37,8 @@ ActiveRecord::Schema.define(version: 20140110221156) do
     t.string   "title",       null: false
     t.text     "description"
     t.string   "status"
-    t.datetime "due_date"
+    t.date     "due_date"
+    t.time     "due_time"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

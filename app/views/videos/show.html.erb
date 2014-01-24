@@ -2,8 +2,15 @@
   <div class="large-12 columns">
     <h2><%= @project.title %></h2>
     <p><strong>Description</strong>: <%= @project.description %></p>
-    <p><strong>Status</strong>: <%= @project.status %></p>
-    <p><strong>Due Date</strong>: <%= @project.due_date %></p>
+    <% if @project.status.present? %>
+      <p><strong>Status</strong>: <%= @project.status %></p>
+    <% end %>
+    <% if @project.due_date.present? %>
+      <p><strong>Due Date</strong>: <%= @project.due_date %></p>
+    <% end %>
+    <% if @project.due_time.present? %>
+      <p><strong>Due Time</strong>: <%= @project.due_time.strftime("%H:%M:%S %Z") %></p>
+    <% end %>
   </div>
 </div>
 
@@ -30,8 +37,8 @@
     <%= simple_form_for([@project, @video, @comment]) do |f| %>
 
     <%= f.input :body %>
-    <%= f.input :timecode_start, label: 'Timecode Start' %>
-    <%= f.input :timecode_end, label: 'Timecode End' %>
+    <%= f.input :timecode_start, label: 'Timecode Start (hh:mm:ss)' %>
+    <%= f.input :timecode_end, label: 'Timecode End (hh:mm:ss)' %>
     <%= f.button :submit %>
 
     <% end %>
@@ -51,7 +58,7 @@
             <tbody>
               <tr>
                 <td><%= comment.body %></td>
-                <td><%= comment.timecode_start %></td>
+                <td><%= link_to comment.timecode_start, "#", class: 'start_link', data: { 'start-time' => comment.start_in_seconds, 'end-time' => comment.end_in_seconds } %></td>
                 <td><%= comment.timecode_end %></td>
               </tr>
             </tbody>

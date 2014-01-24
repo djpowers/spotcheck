@@ -26,4 +26,12 @@ describe Comment do
     it { should have_db_column(:video_id).of_type(:integer).with_options(null: false) }
   end
 
+  describe '#time_in_seconds' do
+    it 'returns the converted timecode in seconds' do
+      comment = FactoryGirl.create(:comment, timecode_start: '00:01:12', timecode_end: '00:01:20')
+      expect(comment.start_in_seconds).to eql(72)
+      expect(comment.end_in_seconds).to eql(80)
+    end
+  end
+
 end

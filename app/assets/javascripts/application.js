@@ -15,4 +15,30 @@
 //= require foundation
 //= require_tree .
 
-$(function(){ $(document).foundation(); });
+//= require pickadate/picker
+//= require pickadate/picker.date
+//= require pickadate/picker.time
+
+$(function(){
+
+  $(document).foundation();
+    $('.datepicker').pickadate();
+    $('.timepicker').pickatime()
+
+    var video = document.getElementsByTagName("video")[0];
+    var pop = Popcorn(video);
+    $('.start_link').on('click', function(e) {
+      console.log('click');
+      e.preventDefault();
+      var target = $(e.target);
+      var time = target.data('start-time')
+      var endTime = target.data('end-time')
+      console.log(time);
+      pop.currentTime(time).play();
+      pop.cue(endTime, function(){
+        this.pause();
+      })
+    });
+
+});
+

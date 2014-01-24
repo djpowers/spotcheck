@@ -12,4 +12,17 @@ class Comment < ActiveRecord::Base
   validates_presence_of :video
   belongs_to :video
 
+  def time_in_seconds(tc)
+    hours, minutes, seconds = tc.split(':')
+    (hours.to_i * 3600) + (minutes.to_i * 60) + (seconds.to_i)
+  end
+
+  def start_in_seconds
+    time_in_seconds(timecode_start)
+  end
+
+  def end_in_seconds
+    time_in_seconds(timecode_end)
+  end
+
 end

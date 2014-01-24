@@ -30,30 +30,17 @@ feature 'user creates project', %Q{
     fill_in 'Title', with: project.title
     fill_in 'Description', with: project.description
     fill_in 'Status', with: project.status
-
-    within '#project_due_date_1i' do
-      select '2014'
-    end
-    within '#project_due_date_2i' do
-      select 'February'
-    end
-    within '#project_due_date_3i' do
-      select '28'
-    end
-    within '#project_due_date_4i' do
-      select '17'
-    end
-    within '#project_due_date_5i' do
-      select '00'
-    end
-
+    fill_in 'Due Date', with: '28 February, 2014', match: :prefer_exact
+    fill_in 'Due Time', with: '5:00 PM', match: :prefer_exact
     click_button 'Create Project'
 
     expect(page).to have_content('Project was successfully created.')
     expect(page).to have_content(project.title)
     expect(page).to have_content(project.description)
     expect(page).to have_content(project.status)
-    expect(page).to have_content("2014-02-28 17:00")
+    expect(page).to have_content("2014-02-28")
+    expect(page).to have_content('17:00')
+    expect(page).to_not have_content('2000-01-01')
   end
 
   scenario 'required information is not supplied' do
