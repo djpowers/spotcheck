@@ -51,6 +51,14 @@ test:
   username:
   password:
 
+staging:
+  adapter: postgresql
+  encoding: unicode
+  database: spotcheck_production
+  pool: 5
+  username:
+  password:
+
 production:
   adapter: postgresql
   encoding: unicode
