@@ -40,6 +40,7 @@ gem 'coveralls', require: false
 gem 'foundation-icons-sass-rails'
 gem 'pickadate-rails'
 gem 'sendgrid'
+gem 'friendly_id'
 
 group :staging, :production do
   gem 'rails_12factor'

@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
 
   def create
-    @project = Project.find(params[:project_id])
+    @project = Project.friendly.find(params[:project_id])
     @video = Video.find(params[:video_id])
     @comment = Comment.new(comment_params)
     @comment.user_id = current_user.id

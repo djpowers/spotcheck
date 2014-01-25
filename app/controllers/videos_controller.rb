@@ -4,12 +4,12 @@ class VideosController < ApplicationController
   before_action :authorize_viewable, only: [:show]
 
   def new
-    @project = Project.find(params[:project_id])
+    @project = Project.friendly.find(params[:project_id])
     @video = @project.videos.build
   end
 
   def create
-    @project = Project.find(params[:project_id])
+    @project = Project.friendly.find(params[:project_id])
     @video = Video.new(project_params)
     @video.project_id = @project.id
 
@@ -24,14 +24,14 @@ class VideosController < ApplicationController
 
   def show
     @video = Video.find(params[:id])
-    @project = Project.find(params[:project_id])
+    @project = Project.friendly.find(params[:project_id])
     @comment = Comment.new
     @comments = @video.comments
   end
 
   def destroy
     @video = Video.find(params[:id])
-    @project = Project.find(params[:project_id])
+    @project = Project.friendly.find(params[:project_id])
 
     @video.destroy
     flash[:notice] = 'Video has been removed from the project.'
@@ -45,7 +45,7 @@ class VideosController < ApplicationController
     end
 
     def current_membership
-      @current_membership ||= Membership.find_by(user: current_user, project_id:  params[:project_id])
+      @current_membership ||= Membership.find_by(user: current_user)
     end
 
     def authorize_creator

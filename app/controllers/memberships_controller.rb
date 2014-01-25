@@ -55,11 +55,11 @@ class MembershipsController < ApplicationController
     end
 
     def get_project
-      @project = Project.find(params[:project_id])
+      @project = Project.friendly.find(params[:project_id])
     end
 
     def current_membership
-      @current_membership ||= Membership.find_by(user: current_user, project_id:  params[:project_id])
+      @current_membership ||= Membership.find_by(user: current_user)
     end
 
     def authorize_creator

@@ -27,12 +27,12 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    @project = Project.find(params[:id])
+    @project = Project.friendly.find(params[:id])
     @videos = @project.videos
   end
 
   def destroy
-    @project = Project.find(params[:id])
+    @project = Project.friendly.find(params[:id])
 
     @project.destroy
     flash[:notice] = 'Project has been successfully deleted.'
@@ -46,7 +46,7 @@ class ProjectsController < ApplicationController
     end
 
     def authorize_user
-      @project = Project.find(params[:id])
+      @project = Project.friendly.find(params[:id])
       unless user_signed_in? and @project.viewable_by?(current_user)
         flash[:alert] = 'You are not authorized to view this project.'
         redirect_to projects_path
