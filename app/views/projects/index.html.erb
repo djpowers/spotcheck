@@ -1,15 +1,15 @@
 <div class="row">
-  <div class="small-3 columns">
+  <div class="medium-3 columns">
     <%= link_to 'New Project', new_project_path, class: "large button radius" %>
   </div>
-  <div class="small-9 columns">
+  <div class="medium-9 columns">
     <p>Projects contain each of your videos for a given job. Add your revisions as you work, grant others permission to create or collaborate.</p>
   </div>
 </div>
 
 <% if @created_projects.present? %>
   <div class="row">
-    <div class="small-6 large-centered columns">
+    <div class="small-3 medium-6 medium-centered columns">
       <table>
         <thead>
           <tr>

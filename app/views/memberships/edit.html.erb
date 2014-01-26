@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="small-6 large-centered columns">
+  <div class="small-6 small-centered columns">
     <%= simple_form_for([@project, @membership]) do |f| %>
 
       <%= f.input :role, as: :radio_buttons, collection: ['creator', 'collaborator'] %>
