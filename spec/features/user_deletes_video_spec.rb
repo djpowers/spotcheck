@@ -44,7 +44,7 @@ feature 'user deletes video', %Q{
     within "#video_#{video.id}" do
       click_link 'Destroy'
     end
-    expect(page).to have_content('You are not authorized to manage videos for this project.')
+    expect(page).to have_content('You are not authorized to manage members or videos in this project.')
   end
 
 end

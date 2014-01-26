@@ -9,6 +9,17 @@ class ApplicationController < ActionController::Base
     projects_path
   end
 
+  def current_membership
+    @current_membership ||= Membership.find_by(user: current_user)
+  end
+
+  def authorize_creator
+    unless current_membership.creator?
+      flash[:notice] = 'You are not authorized to manage members or videos in this project.'
+      redirect_to project_path(params[:project_id])
+    end
+  end
+
   protected
 
   def flash_message

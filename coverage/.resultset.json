@@ -1237,6 +1237,17 @@
         null,
         null,
         1,
+        30,
+        null,
+        null,
+        1,
+        18,
+        4,
+        4,
+        null,
+        null,
+        null,
+        1,
         null,
         1,
         0,
@@ -1366,16 +1377,6 @@
         19,
         null,
         null,
-        1,
-        15,
-        null,
-        null,
-        1,
-        12,
-        2,
-        2,
-        null,
-        null,
         null
       ],
       "/Users/Dave/Dropbox/launchacademy/spotcheck/app/controllers/videos_controller.rb": [
@@ -1426,17 +1427,6 @@
         null,
         null,
         1,
-        15,
-        null,
-        null,
-        1,
-        6,
-        2,
-        2,
-        null,
-        null,
-        null,
-        1,
         9,
         1,
         1,
@@ -1473,6 +1463,6 @@
         null
       ]
     },
-    "timestamp": 1390693082
+    "timestamp": 1390695409
   }
 }

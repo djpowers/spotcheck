@@ -58,14 +58,4 @@ class MembershipsController < ApplicationController
       @project = Project.friendly.find(params[:project_id])
     end
 
-    def current_membership
-      @current_membership ||= Membership.find_by(user: current_user)
-    end
-
-    def authorize_creator
-      unless current_membership.creator?
-        flash[:notice] = 'You are not authorized to manage members in this project.'
-        redirect_to project_path(params[:project_id])
-      end
-    end
 end
