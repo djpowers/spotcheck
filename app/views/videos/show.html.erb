@@ -1,7 +1,14 @@
 <div class="row">
-  <div class="large-12 columns">
-    <h2><%= @project.title %></h2>
-    <p><strong>Description</strong>: <%= @project.description %></p>
+  <div class="small-centered columns">
+    <h2 class="center-text"><%= @project.title %></h2>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-6 columns">
+    <% if @project.description.present? %>
+      <p><strong>Description</strong>: <%= @project.description %></p>
+    <% end %>
     <% if @project.status.present? %>
       <p><strong>Status</strong>: <%= @project.status %></p>
     <% end %>
@@ -12,10 +19,8 @@
       <p><strong>Due Time</strong>: <%= @project.due_time.strftime("%H:%M:%S %Z") %></p>
     <% end %>
   </div>
-</div>
 
-<div class="row">
-  <div class="large-4 columns">
+  <div class="small-6 columns">
     <table>
       <thead>
         <tr>
@@ -33,7 +38,18 @@
         </tr>
       </tbody>
     </table>
+  </div>
+</div>
 
+<div class="row">
+  <div class="large-centered columns">
+    <video id="video" src=<%= @video.video_file %> controls>
+    </video>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-6 columns">
     <%= simple_form_for([@project, @video, @comment]) do |f| %>
 
     <%= f.input :body %>
@@ -44,35 +60,28 @@
     <% end %>
   </div>
 
-  <div class="large-8 columns">
+  <div class="small-6 columns">
     <% if @video.comments.present? %>
-      <table>
-        <% @video.comments.each do |comment| %>
-          <thead>
-            <tr>
-              <th><%= comment.user.first_name + ' ' + comment.user.last_name %></th>
-              <th><%= comment.created_at %></th>
-            </tr>
-          </thead>
+    <table>
+      <% @video.comments.each do |comment| %>
+      <thead>
+        <tr>
+          <th><%= comment.user.first_name + ' ' + comment.user.last_name %></th>
+          <th><%= comment.created_at %></th>
+        </tr>
+      </thead>
 
-            <tbody>
-              <tr>
-                <td><%= comment.body %></td>
-                <td><%= link_to comment.timecode_start, "#", class: 'start_link', data: { 'start-time' => comment.start_in_seconds, 'end-time' => comment.end_in_seconds } %></td>
-                <td><%= comment.timecode_end %></td>
-              </tr>
-            </tbody>
-        <% end %>
-      </table>
+      <tbody>
+        <tr>
+          <td><%= comment.body %></td>
+          <td><%= link_to comment.timecode_start, "#", class: 'start_link', data: { 'start-time' => comment.start_in_seconds, 'end-time' => comment.end_in_seconds } %></td>
+          <td><%= comment.timecode_end %></td>
+        </tr>
+      </tbody>
+      <% end %>
+    </table>
     <% end %>
   </div>
 
-</div>
-
-<div class="row">
-  <div class="large-centered columns">
-    <video src=<%= @video.video_file %> controls>
-    </video>
-  </div>
 </div>
 

@@ -1,7 +1,9 @@
 <div class="row">
   <div class="small-6 columns">
     <h2><%= @project.title %></h2>
-    <p><strong>Description</strong>: <%= @project.description %></p>
+    <% if @project.description.present? %>
+      <p><strong>Description</strong>: <%= @project.description %></p>
+    <% end %>
     <% if @project.status.present? %>
       <p><strong>Status</strong>: <%= @project.status %></p>
     <% end %>
