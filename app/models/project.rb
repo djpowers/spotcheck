@@ -3,7 +3,7 @@ class Project < ActiveRecord::Base
   extend FriendlyId
   friendly_id :title, use: :slugged
 
-  validates_presence_of :title
+  validates_presence_of :title, :description
 
   has_many :videos,
     dependent: :destroy

@@ -51,6 +51,9 @@ feature 'user creates project', %Q{
     within '.input.project_title' do
       expect(page).to have_content("can't be blank")
     end
+    within '.input.project_description' do
+      expect(page).to have_content("can't be blank")
+    end
   end
 
   scenario 'user creates project and is listed as creator' do

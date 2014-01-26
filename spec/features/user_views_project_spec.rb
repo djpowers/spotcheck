@@ -40,6 +40,10 @@ feature 'user views project', %Q{
     within '.created' do
       expect(page).to have_content(project.title)
     end
+
+    click_link 'Show'
+    expect(page).to have_content(project.title)
+    expect(page).to have_content(project.description)
   end
 
   scenario 'user views project on which they are a collaborator' do
@@ -52,6 +56,10 @@ feature 'user views project', %Q{
     within '.collaborated' do
       expect(page).to have_content(project.title)
     end
+
+    click_link 'Show'
+    expect(page).to have_content(project.title)
+    expect(page).to have_content(project.description)
   end
 
   scenario 'user does not see project on which they have no association' do

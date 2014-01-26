@@ -12,7 +12,7 @@ describe Project do
 
   describe 'database' do
     it { should have_db_column(:title).of_type(:string).with_options(null: false) }
-    it { should have_db_column(:description).of_type(:text) }
+    it { should have_db_column(:description).of_type(:text).with_options(null: false) }
     it { should have_db_column(:status).of_type(:string) }
     it { should have_db_column(:due_date).of_type(:date) }
     it { should have_db_column(:due_time).of_type(:time) }

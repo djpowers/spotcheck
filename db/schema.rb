@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20140125222206) do
 
   create_table "projects", force: true do |t|
     t.string   "title",       null: false
-    t.text     "description"
+    t.text     "description", null: false
     t.string   "status"
     t.date     "due_date"
     t.time     "due_time"
