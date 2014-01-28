@@ -25,6 +25,7 @@ describe CommentNotification do
       mail = CommentNotification.changes(comment)
 
       mail.body.encoded.should match(project.title)
+      mail.body.encoded.should match(comment.body)
     end
   end
 
