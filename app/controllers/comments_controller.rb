@@ -8,6 +8,7 @@ class CommentsController < ApplicationController
     @comment.video_id = @video.id
 
     if @comment.save
+      CommentNotification.changes(@comment).deliver
       flash[:notice] = 'Comment was successfully added.'
       redirect_to project_video_path(@project, @video)
     else

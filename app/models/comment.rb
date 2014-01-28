@@ -25,4 +25,13 @@ class Comment < ActiveRecord::Base
     time_in_seconds(timecode_end)
   end
 
+  def revise
+    if save
+      CommentNotification.changes(self).deliver
+      return true
+    else
+      return false
+    end
+  end
+
 end

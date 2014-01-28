@@ -56,6 +56,8 @@ group :development, :test do
   gem 'validates_email_format_of'
   gem 'launchy'
   gem 'dotenv-rails'
+  gem 'email_spec'
+  gem 'mailcatcher'
 end
 
 group :development do

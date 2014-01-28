@@ -34,4 +34,10 @@ describe Comment do
     end
   end
 
+  it 'sends a notification' do
+    ActionMailer::Base.deliveries = []
+    FactoryGirl.build(:comment).revise
+    expect(ActionMailer::Base.deliveries.size).to eql(1)
+  end
+
 end
