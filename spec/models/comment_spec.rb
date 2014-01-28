@@ -36,7 +36,13 @@ describe Comment do
 
   it 'sends a notification' do
     ActionMailer::Base.deliveries = []
-    FactoryGirl.build(:comment).revise
+
+    owner = FactoryGirl.create(:user)
+    project = FactoryGirl.create(:project)
+    Membership.create(user: owner, project: project)
+    video = FactoryGirl.create(:video, project: project)
+    FactoryGirl.build(:comment, video: video).revise
+
     expect(ActionMailer::Base.deliveries.size).to eql(1)
   end
 

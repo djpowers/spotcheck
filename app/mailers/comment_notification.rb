@@ -9,7 +9,7 @@ class CommentNotification < ActionMailer::Base
   def changes(comment)
     @comment = comment
 
-    mail to: @comment.video.project.users.pluck(:email),
+    mail to: [@comment.video.project.users.pluck(:email)],
       subject: 'New Comment on ' + @comment.video.project.title
   end
 end

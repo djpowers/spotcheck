@@ -2,16 +2,29 @@ require "spec_helper"
 
 describe CommentNotification do
   describe "changes" do
-    let(:mail) { CommentNotification.changes }
 
     it "renders the headers" do
-      mail.subject.should eq("Changes")
-      mail.to.should eq(["to@example.org"])
-      mail.from.should eq(["from@example.com"])
+      owner = FactoryGirl.create(:user)
+      project = FactoryGirl.create(:project)
+      Membership.create(user: owner, project: project)
+      video = FactoryGirl.create(:video, project: project)
+      comment = FactoryGirl.create(:comment, video: video)
+      mail = CommentNotification.changes(comment)
+
+      mail.subject.should eq('New Comment on ' + comment.video.project.title)
+      mail.to.should eq(comment.video.project.users.pluck(:email))
+      mail.from.should eq(["do-not-reply@spotcheck.herokuapp.com"])
     end
 
     it "renders the body" do
-      mail.body.encoded.should match("Hi")
+      owner = FactoryGirl.create(:user)
+      project = FactoryGirl.create(:project)
+      Membership.create(user: owner, project: project)
+      video = FactoryGirl.create(:video, project: project)
+      comment = FactoryGirl.create(:comment, video: video)
+      mail = CommentNotification.changes(comment)
+
+      mail.body.encoded.should match(project.title)
     end
   end
 
