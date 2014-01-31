@@ -12,8 +12,7 @@ class Comment < ActiveRecord::Base
   validates_presence_of :video
   belongs_to :video
 
-  validate :end_time_greater_than_start,
-    if: -> (comment) { comment.timecode_start.present? && comment.timecode_end.present? }
+  validate :end_time_greater_than_start, if: :both_times_present?
 
   def time_in_seconds(tc)
     hours, minutes, seconds = tc.split(':')
@@ -42,5 +41,11 @@ class Comment < ActiveRecord::Base
       return false
     end
   end
+
+  private
+
+    def both_times_present?
+      timecode_start.present? && timecode_end.present?
+    end
 
 end
