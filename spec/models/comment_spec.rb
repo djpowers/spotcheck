@@ -37,7 +37,6 @@ describe Comment do
   describe '#end_time_greater_than_start' do
     it 'rejects start times greater than end time' do
       comment = FactoryGirl.build(:comment, timecode_start: '00:00:04', timecode_end: '00:00:02')
-      binding.pry
       expect(comment.valid?).to eql(false)
     end
   end
