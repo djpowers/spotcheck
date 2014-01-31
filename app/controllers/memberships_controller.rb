@@ -15,7 +15,8 @@ class MembershipsController < ApplicationController
       flash[:success] = 'New user was successfully added to project.'
       redirect_to project_path(@project)
     else
-      @membership.errors.add(:email, "must match email of a registered user.")
+      @membership.errors.add(:email, "must match email of a registered user.") if @membership.user.nil?
+      flash[:error] = 'Project Membership already exists.' if @membership.errors.messages[:project_id].present?
       render :new
     end
   end

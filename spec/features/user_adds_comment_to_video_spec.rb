@@ -98,7 +98,25 @@ feature 'user adds comment to video', %Q{
     visit project_video_path(project, video)
 
     click_button 'Create Comment'
-    expect(page).to have_content("Comment body can't be blank.")
+    expect(page).to have_content("Body can't be blank")
+  end
+
+  scenario 'collaborator enters invalid timecode' do
+    user = FactoryGirl.create(:user)
+    video = FactoryGirl.create(:video)
+    project = video.project
+    FactoryGirl.create(:membership, user: user, project: project, role: 'collaborator')
+    comment = FactoryGirl.build(:comment, timecode_start: '00:00:04', timecode_end: '00:00:02')
+    sign_in_as(user)
+    visit project_video_path(project, video)
+
+    fill_in 'Body', with: comment.body
+    fill_in 'Timecode Start', with: comment.timecode_start
+    fill_in 'Timecode End', with: comment.timecode_end
+    click_button 'Create Comment'
+
+    expect(page).to have_content('Timecode end must be greater than timecode start')
+    expect(page).to_not have_content(comment.body)
   end
 
 end

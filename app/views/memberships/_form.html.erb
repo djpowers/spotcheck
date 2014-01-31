@@ -1,6 +1,6 @@
 <%= simple_form_for([@project, @membership]) do |f| %>
 
-  <%= f.input :email, label: 'User Email' %>
+  <%= f.input :email, label: 'User Email', required: true %>
   <%= f.input :role, as: :radio_buttons, collection: ['creator', 'collaborator'] %>
   <%= f.button :submit, 'Create User' %>
 

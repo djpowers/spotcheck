@@ -12,7 +12,7 @@ class CommentsController < ApplicationController
       flash[:notice] = 'Comment was successfully added.'
       redirect_to project_video_path(@project, @video)
     else
-      flash[:error] = "Comment body can't be blank."
+      flash[:error] = @comment.errors.full_messages.join('; ')
       redirect_to project_video_path(@project, @video)
     end
   end
