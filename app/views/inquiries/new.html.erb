@@ -1,0 +1,17 @@
+<div class="row contact">
+  <div class="small-6 small-centered columns">
+    <h1>Contact Us</h1>
+
+    <%= simple_form_for :inquiry, url: inquiries_path, method: :post do |f| %>
+
+      <%= f.input :first_name, label: 'First Name' %>
+      <%= f.input :last_name, label: 'Last Name' %>
+      <%= f.input :email %>
+      <%= f.input :subject %>
+      <%= f.input :body %>
+      <%= f.submit "Submit Inquiry" %>
+
+    <% end %>
+
+  </div>
+</div>
