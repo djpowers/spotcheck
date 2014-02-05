@@ -39,6 +39,7 @@ feature 'user submits inquiry', %Q{
     last_email = ActionMailer::Base.deliveries.last
     expect last_email.to have_subject('Hello')
     expect last_email.to deliver_to('djpowers89@gmail.com')
+    expect last_email.to have_body_text('John Doe')
     expect last_email.to have_body_text('Inquiry was successfully submitted.')
   end
 
