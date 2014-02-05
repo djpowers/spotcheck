@@ -8,7 +8,7 @@ describe Inquiry do
     email = 'johndoe@mail.com'
     subject = 'Hello'
     body = 'Just wanted to say hi.'
-    mail = Inquiry.inquiry_payload(first_name: first_name, last_name: last_name, email: email, subject: subject, body: body)
+    mail = Inquiry.inquiry_payload(inquiry: {first_name: first_name, last_name: last_name, email: email, subject: subject, body: body})
 
     mail.subject.should eq(subject)
     mail.to.should eq(['djpowers89@gmail.com'])
@@ -21,7 +21,7 @@ describe Inquiry do
     email = 'johndoe@mail.com'
     subject = 'Hello'
     body = 'Just wanted to say hi.'
-    mail = Inquiry.inquiry_payload(first_name: first_name, last_name: last_name, email: email, subject: subject, body: body)
+    mail = Inquiry.inquiry_payload(inquiry: {first_name: first_name, last_name: last_name, email: email, subject: subject, body: body})
 
     mail.body.encoded.should match(body)
   end
