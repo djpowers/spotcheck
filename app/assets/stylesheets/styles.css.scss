@@ -34,9 +34,24 @@
   padding-top: 50px;
 }
 
+html, body{
+  height: 100%
+}
+
+#holder{
+  min-height: 100%;
+  position: relative;
+}
+
+#body{
+  padding-bottom: 20px; /* height of footer */
+}
+
 footer {
-  position: fixed;
-  bottom: 0;
+  position: absolute;
   width: 100%;
-  height: 25px; /* choose any height */
+  height: 20px; /* choose any height */
+  bottom: 0;
+  background-color: #333333;
+  text-align: center;
 }
