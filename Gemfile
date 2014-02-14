@@ -41,6 +41,7 @@ gem 'foundation-icons-sass-rails'
 gem 'pickadate-rails'
 gem 'sendgrid'
 gem 'friendly_id'
+gem 'newrelic_rpm'
 
 group :staging, :production do
   gem 'rails_12factor'
