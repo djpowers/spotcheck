@@ -43,6 +43,7 @@ gem 'pickadate-rails'
 gem 'sendgrid'
 gem 'friendly_id'
 gem 'newrelic_rpm'
+gem 'travis'
 
 group :staging, :production do
   gem 'rails_12factor'
